@@ -42,6 +42,14 @@ no external DRAM**. That has three compounding effects when moved from FPGA fabr
 - **Tiny die.** ~5 mm² on 28 nm (logic + on-chip activation SRAM), which is what drives the
   ~$2/unit silicon cost at volume.
 
+> **⏱️ Two clock modes, same efficiency.** Because the datapath is logic-only (0 DSP, all CSD
+> shift-add), the same netlist closes timing ~3–4× faster off the FPGA fabric (the Kintex-7 is
+> itself a 28 nm part, so this is a same-node fabric-overhead win). That lets the ASIC clock to
+> **~800 MHz → up to ~200 FPS** for throughput-bound jobs, or stay at **~200 MHz / ~51 FPS /
+> ~0.2 W** milliwatt-class for battery/always-on. Throughput *and* power scale ~linearly with
+> clock, so **efficiency is ~constant at ~255 FPS/W** at either point. **Every cost figure below
+> uses the low-power (milliwatt) point** — the headline product mode.
+
 ---
 
 ## Core comparison
@@ -137,7 +145,9 @@ differentiator is power, cost, and determinism, not mAP.*
   constants, **0 DSP, no external DRAM**). Unit cost ~$2 at **100 k+** volume (wafer + package +
   test, ~90% yield). **NRE ~$2.5 M** (28 nm mask set + design/PD/verification/bring-up).
 - **ASIC power ~0.2 W** derived from the FPGA's measured 3.2 W logic ÷ ~15× fabric-vs-ASIC factor,
-  at iso-performance (51 FPS). Drops to tens of mW when duty-cycled.
+  at iso-performance (51 FPS). Drops to tens of mW when duty-cycled. The logic-only datapath also
+  closes timing ~3–4× faster off fabric, so the same chip can instead clock to **~800 MHz → ~200 FPS**
+  at ~0.8 W (same ~255 FPS/W efficiency); the low-power 200 MHz / 51 FPS point is used throughout for the cost math.
 - **Comparators** are the *inference engine* of each platform at YOLOv8n/v10n, 640², INT8:
   Jetson Orin Nano Super ($249, 67 TOPS, ~150 FPS, ~15 W typ), Hailo-8 (~$200, 26 TOPS, ~100 FPS,
   ~2.5 W — needs a host), Coral Edge TPU dev board (~$130, 4 TOPS, ~35 FPS, ~2 W),

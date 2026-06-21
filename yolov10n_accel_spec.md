@@ -712,6 +712,8 @@ Effective throughput                        ≈ 49–55 FPS
 | **Total** | | **~3,870,000** | **96.8%** ✅ |
 
 > 3.87M cycles @ 200 MHz = 19.4 ms/frame → **~51 FPS** ✅
+>
+> As a 28 nm ASIC the same 3.87M-cycle frame at **~800 MHz** → 4.8 ms/frame → **up to ~200 FPS** (see §7.2.3).
 
 #### 7.1.3 Power Estimate
 
@@ -763,6 +765,18 @@ Kintex-7 at 1.0V core, 85°C junction, commercial grade.
 - Pipeline register stages between MAC array output and accumulator:
   insert at least 2 pipeline stages for Fmax > 200 MHz.
 - `rst_n` is synchronous; use `FDRE` with synchronous reset throughout.
+
+**28 nm ASIC migration (estimate).** The datapath is logic-only — 0 DSP, every weight is a
+CSD constant shift-add — so the critical path (CSD adder tree → INT32 accumulator → requant
+mul-shift-round-clamp → SiLU LUT) is dominated by standard-cell logic, not hard macros. The
+Kintex-7 fabric is itself 28 nm (TSMC 28HPL), making FPGA→ASIC a *same-node* move; the typical
+same-node speed-up is ~3–4× (Kuon & Rose). That projects **Fmax ~600–800 MHz** as a 28 nm
+standard-cell ASIC vs. the 200 MHz FPGA target, i.e. **up to ~150–200 FPS** at the same 3.87M
+cycles/frame. Throughput and dynamic power both scale ~linearly with clock, so efficiency is
+~constant (~255 FPS/W): pick **~800 MHz / ~200 FPS / ~0.8 W** for max throughput, or hold
+**~200 MHz / ~51 FPS / ~0.2 W** milliwatt-class for battery/always-on. On-chip activation/line
+buffers become SRAM macros (~0.5–1 ns access → ≳1 GHz single-cycle), so they do not cap the
+above range. *Estimate only — a real number requires 28 nm standard-cell synthesis + STA.*
 
 #### 7.2.4 SiLU Activation
 
@@ -967,6 +981,3 @@ a 2-cycle pipeline delay. For C_in > 16, the loop iterates C_in/16 times.*
 **Document:** YOLOv10n Object-Detection Accelerator Spec v0.1  
 **Status:** Preliminary — pending `hw_graph.json` and `hwconst/` handoff  
 **Next revision trigger:** Receipt of SW Track handoff contract files
-
-
-

@@ -45,8 +45,9 @@ into a fixed-function accelerator targeting the **Digilent Genesys 2 board
 - **INT8 datapath** with per-channel weight scales (INT4 for tolerant layers).
 - **Folded INT8 pipeline** of **1024 CSD constant-multiplier MACs** sized to hit
   **~51 FPS @ 200 MHz** using **~38K LUTs (11.7% of the XC7K325T)**, **~483 BRAM
-  (57.5%)**, and **0 DSPs**, est. **~3.2 W on FPGA** — and **~0.2 W as a 28 nm
-  ASIC** (the real product; single-digit milliwatts when duty-cycled).
+  (57.5%)**, and **0 DSPs**, est. **~3.2 W on FPGA** — and as a 28 nm ASIC,
+  **up to ~200 FPS @ ~800 MHz** at **~0.2–0.8 W** (the real product; single-digit
+  milliwatts when duty-cycled).
 - A full **SW→HW handoff**: compressed/quantized model → hardware op-graph →
   bit-accurate **golden test vectors** → RTL verification harness → Vivado
   synth/P&R/bitstream.
@@ -70,6 +71,9 @@ vs. off-the-shelf hardware:
   in logic (0 DSP, **no weight SRAM, no external DRAM**).
 - **Break-even ≈ 10,100 units** vs. buying Jetsons on hardware capex alone — and far
   sooner once 24/7 power is counted; **~11× lower 3-year TCO** for a 100k always-on fleet.
+- **Two clock modes:** the cost figures use the milliwatt point (~200 MHz / 51 FPS / ~0.2 W);
+  the same logic-only netlist also closes at **~800 MHz → up to ~200 FPS** (~0.8 W) for
+  throughput-bound jobs — efficiency stays ~constant at ~255 FPS/W.
 - **Same accuracy** (it's the same frozen INT8 weights); the win is power, cost, and
   deterministic latency. The tradeoff is **one frozen model** — exactly what a
   single-purpose, high-volume edge detector wants.
@@ -241,7 +245,7 @@ Fully narrated (ElevenLabs *Brian*, Multilingual v2), **exactly 180 s**. Full te
 1. **Hook:** "What if an entire object detector lived inside one chip — no GPU, no cloud?" Weights frozen into multiplier-less logic.
 2. **NMS-free:** YOLOv10n needs no non-max-suppression — an entire hardware block disappears, leaving a clean feed-forward pipeline that maps onto FPGA fabric.
 3. **Flow:** pretrained → INT8 quantize → freeze into a fixed contract → hand to hardware. No retraining loops.
-4. **Results:** near-lossless INT8 (37.94 → 37.62 mAP), ~51 FPS on Kintex-7, ~38K LUTs, ~3.2 W, **0 DSPs** (every multiply is constant-coefficient logic), bit-exact vs software golden vectors.
+4. **Results:** near-lossless INT8 (37.94 → 37.62 mAP), ~51 FPS on Kintex-7 (**~200 FPS as a 28 nm ASIC @ ~800 MHz**), ~38K LUTs, ~3.2 W, **0 DSPs** (every multiply is constant-coefficient logic), bit-exact vs software golden vectors.
 5. **Why + cost:** private, milliwatt-class edge AI; ~26× better energy/frame, ~$2/chip at volume.
 
 **Part 2 — the bet (1:38–3:00)**

@@ -1,8 +1,8 @@
 # 🔬 Silicon YOLO
 
 > **We froze a neural network into silicon.** YOLOv10n's weights become hard-wired,
-> multiplier-less logic — **~0.2 W, ~$2/chip** object detection that beats edge GPUs
-> on energy by **~26×** — co-designed by **two AI agents** orchestrated by a human-in-the-loop.
+> multiplier-less logic — **~0.2 W, ~$2/chip**, **up to ~200 FPS** object detection that
+> beats edge GPUs on energy by **~26×** — co-designed by **two AI agents** orchestrated by a human-in-the-loop.
 
 A **fixed-weight YOLO object-detection chip** for the **Digilent Genesys 2 / Xilinx
 Kintex-7 XC7K325T**. Instead of fetching weights from DRAM, every weight is **baked
@@ -12,7 +12,7 @@ doesn't need a general MAC array, a weight bus, or off-chip memory.
 
 | 🎯 Target | ⚡ Throughput | 🔌 Power | 🧮 DSPs | 📦 LUTs | 🎓 Accuracy |
 |---|---|---|---|---|---|
-| Kintex-7 XC7K325T | **~51 FPS** @200 MHz | **~3.2 W** FPGA · **~0.2 W** ASIC | **0** | ~38K (11.7%) | **37.62** mAP50-95 |
+| Kintex-7 XC7K325T | **~51 FPS** @200 MHz (FPGA) · **~200 FPS** @~800 MHz (ASIC) | **~3.2 W** FPGA · **~0.2 W** ASIC | **0** | ~38K (11.7%) | **37.62** mAP50-95 |
 
 ---
 
@@ -68,7 +68,7 @@ That removes the DSP array, the weight memory traffic, and most of the power.
 - **0 DSP blocks.** Every conv weight is a **CSD constant-coefficient multiplier** + on-chip weight ROM.
 - **Folded INT8 pipeline of 1024 CSD MACs**, per-channel weight scales (INT4 for tolerant layers).
 - **NMS-free head deletes an entire hardware block** vs. classic YOLO accelerators.
-- Fits **~11.7 % of a Kintex-7** at **~51 FPS / ~3.2 W** — and **~0.2 W as a 28 nm ASIC** (the real product).
+- Fits **~11.7 % of a Kintex-7** at **~51 FPS / ~3.2 W** — and as a 28 nm ASIC runs **up to ~200 FPS @ ~800 MHz** at **~0.2–0.8 W** (the real product).
 - **Near-lossless:** FP32 37.94 → INT8 37.62 mAP50-95 (**−0.32 pt**).
 
 ## 📐 Architecture & specs
@@ -83,8 +83,8 @@ That removes the DSP array, the weight memory traffic, and most of the power.
 | **Weights** | Frozen in on-chip ROM (`.mem`/`.coe`), baked as multiplier-less logic |
 | **LUTs** | ~38K (**11.7 %** of XC7K325T) |
 | **BRAM** | ~483 (**57.5 %**) |
-| **Throughput** | **~51 FPS** @ 200 MHz |
-| **Power** | **~3.2 W** on FPGA · **~0.2 W** as a 28 nm ASIC |
+| **Throughput** | **~51 FPS** @ 200 MHz (FPGA) · **up to ~200 FPS** @ ~800 MHz (28 nm ASIC) |
+| **Power** | **~3.2 W** on FPGA · **~0.2 W** (200 MHz) – **~0.8 W** (800 MHz) as a 28 nm ASIC |
 | **Accuracy** | FP32 **37.94** → INT8 PTQ **37.62** mAP50-95 (−0.32) |
 
 ## 📊 Results & verification
@@ -97,6 +97,14 @@ That removes the DSP array, the weight memory traffic, and most of the power.
 
 The FPGA is the *prototype*; the **fixed-weight 28 nm ASIC is the product**. Against
 today's edge options it wins decisively on energy and lifetime cost:
+
+> **⏱️ Two operating points, same efficiency.** The datapath is logic-only (0 DSP — every
+> weight is CSD shift-add), so the same netlist closes timing far faster off FPGA fabric.
+> The Kintex-7 *is* a 28 nm part, so this is a same-node fabric-overhead win (~3–4×): the ASIC
+> reaches **up to ~800 MHz → ~200 FPS**. Throughput and power both scale ~linearly with clock,
+> so efficiency stays ~constant at **~255 FPS/W** — run **~800 MHz / ~200 FPS / ~0.8 W** for
+> max throughput, or **~200 MHz / ~51 FPS / ~0.2 W** milliwatt-class for battery/always-on.
+> The cost table below uses the **low-power point** (the headline product mode).
 
 | Platform | Type | Power | FPS @640 INT8 | mAP50-95 | Unit cost (@100k) | NRE |
 |---|---|---|---|---|---|---|
