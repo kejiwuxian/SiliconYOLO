@@ -18,11 +18,11 @@ fixed weights as CSD/constant multipliers (0-DSP goal) · 640×640 · 80-class C
 | 0 | Environment (reuse genesys2 torch+COCO) | torch CUDA ✓, ultralytics ✓, COCO 5000 imgs ✓ | ✅ done |
 | 1 | Repo scaffold + git | dirs, `.gitignore`, first commit | ✅ done |
 | 2 | Fetch pretrained YOLOv10n | `model/yolov10n.pt`, `MODEL_CHOICE.md` | ✅ done |
-| 3 | FP32 baseline eval | `model/eval_fp32.json` (mAP) | ⏳ |
-| 4 | INT8 PTQ + calibration | `hwconst/quant_scales.json`, `model/eval_int8.json` | ⏳ |
-| 5 | Freeze weights | `model/frozen/yolov10n_int8_frozen.pt` | ⏳ |
-| 6 | HW handoff artifacts | `hwgraph/hw_graph.json`, `hwconst/*.mem`/`.coe`, `golden/` | ⏳ |
-| 7 | Docs + commits + report | this file, `PROGRESS.md` | ⏳ |
+| 3 | FP32 baseline eval | `model/eval_fp32.json` — **mAP50-95 0.3794** | ✅ done |
+| 4 | INT8 PTQ + calibration | `hwconst/quant_scales.json`, `model/eval_int8.json` — **mAP50-95 0.3762** | ✅ done |
+| 5 | Freeze weights | `model/frozen/yolov10n_int8_frozen.pt` | ✅ done |
+| 6 | HW handoff artifacts | `hwgraph/hw_graph.json`, `hwconst/*.mem`/`.coe`, `golden/` | ✅ done |
+| 7 | Docs + commits + report | this file, `PROGRESS.md` | ✅ done |
 
 ## Key decisions
 - **YOLOv10n over YOLO11n/v8n:** NMS-free head removes an entire iterative,

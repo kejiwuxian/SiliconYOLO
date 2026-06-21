@@ -1,0 +1,12 @@
+{
+  "tag": "int8",
+  "weights": "model\\yolov10n.pt",
+  "precision": "int8_weights_fakequant",
+  "quantized_conv_layers": 83,
+  "imgsz": 640,
+  "metric": "pycocotools (ultralytics validator)",
+  "mAP50_95": 0.37623,
+  "mAP50": 0.53014,
+  "generated_utc": "2026-06-21T07:29:12Z",
+  "elapsed_sec": 44.8
+}

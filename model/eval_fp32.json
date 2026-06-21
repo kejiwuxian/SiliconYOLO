@@ -1,0 +1,12 @@
+{
+  "tag": "fp32",
+  "weights": "model\\yolov10n.pt",
+  "precision": "fp32",
+  "quantized_conv_layers": 0,
+  "imgsz": 640,
+  "metric": "pycocotools (ultralytics validator)",
+  "mAP50_95": 0.37935,
+  "mAP50": 0.53067,
+  "generated_utc": "2026-06-21T07:23:51Z",
+  "elapsed_sec": 46.1
+}

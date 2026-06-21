@@ -1,0 +1,2246 @@
+{
+  "task": "STEP 6 hwconst (.mem/.coe) export",
+  "generated_utc": "2026-06-21T07:35:13Z",
+  "source_frozen": "model/frozen/yolov10n_int8_frozen.pt",
+  "authority": "hwgraph/hw_graph.json (filenames + requant)",
+  "num_weight_files": 83,
+  "num_bias_files": 82,
+  "conventions": {
+    "weight": "int8, 2's-complement hex, 2 nibbles/line, MSB-first, [c_out][c_in][kh][kw]",
+    "bias": "int32, 2's-complement hex, 8 nibbles/line, MSB-first"
+  },
+  "layers": {
+    "model.0.conv": {
+      "name": "model.0.conv",
+      "id": 0,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_000_model_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_000_model_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 432,
+        "shape_oc_ic_kh_kw": [
+          16,
+          3,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_000_model_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_000_model_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 16,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.007874016
+      }
+    },
+    "model.1.conv": {
+      "name": "model.1.conv",
+      "id": 1,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_001_model_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_001_model_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 4608,
+        "shape_oc_ic_kh_kw": [
+          32,
+          16,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_001_model_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_001_model_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.259637007
+      }
+    },
+    "model.2.cv1.conv": {
+      "name": "model.2.cv1.conv",
+      "id": 2,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_002_model_2_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_002_model_2_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1024,
+        "shape_oc_ic_kh_kw": [
+          32,
+          32,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_002_model_2_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_002_model_2_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.964519351
+      }
+    },
+    "model.2.m.0.cv1.conv": {
+      "name": "model.2.m.0.cv1.conv",
+      "id": 3,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_003_model_2_m_0_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_003_model_2_m_0_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 2304,
+        "shape_oc_ic_kh_kw": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_003_model_2_m_0_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_003_model_2_m_0_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 16,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.724009056
+      }
+    },
+    "model.2.m.0.cv2.conv": {
+      "name": "model.2.m.0.cv2.conv",
+      "id": 4,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_004_model_2_m_0_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_004_model_2_m_0_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 2304,
+        "shape_oc_ic_kh_kw": [
+          16,
+          16,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_004_model_2_m_0_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_004_model_2_m_0_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 16,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.229888511
+      }
+    },
+    "model.2.cv2.conv": {
+      "name": "model.2.cv2.conv",
+      "id": 5,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_005_model_2_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_005_model_2_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1536,
+        "shape_oc_ic_kh_kw": [
+          32,
+          48,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_005_model_2_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_005_model_2_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.345146419
+      }
+    },
+    "model.3.conv": {
+      "name": "model.3.conv",
+      "id": 6,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_006_model_3_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_006_model_3_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 18432,
+        "shape_oc_ic_kh_kw": [
+          64,
+          32,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_006_model_3_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_006_model_3_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.20272743
+      }
+    },
+    "model.4.cv1.conv": {
+      "name": "model.4.cv1.conv",
+      "id": 7,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_007_model_4_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_007_model_4_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 4096,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_007_model_4_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_007_model_4_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.130248017
+      }
+    },
+    "model.4.m.0.cv1.conv": {
+      "name": "model.4.m.0.cv1.conv",
+      "id": 8,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_008_model_4_m_0_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_008_model_4_m_0_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 9216,
+        "shape_oc_ic_kh_kw": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_008_model_4_m_0_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_008_model_4_m_0_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.090759127
+      }
+    },
+    "model.4.m.0.cv2.conv": {
+      "name": "model.4.m.0.cv2.conv",
+      "id": 9,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_009_model_4_m_0_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_009_model_4_m_0_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 9216,
+        "shape_oc_ic_kh_kw": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_009_model_4_m_0_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_009_model_4_m_0_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.079453513
+      }
+    },
+    "model.4.m.1.cv1.conv": {
+      "name": "model.4.m.1.cv1.conv",
+      "id": 10,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_010_model_4_m_1_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_010_model_4_m_1_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 9216,
+        "shape_oc_ic_kh_kw": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_010_model_4_m_1_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_010_model_4_m_1_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.091476568
+      }
+    },
+    "model.4.m.1.cv2.conv": {
+      "name": "model.4.m.1.cv2.conv",
+      "id": 11,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_011_model_4_m_1_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_011_model_4_m_1_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 9216,
+        "shape_oc_ic_kh_kw": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_011_model_4_m_1_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_011_model_4_m_1_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.056884443
+      }
+    },
+    "model.4.cv2.conv": {
+      "name": "model.4.cv2.conv",
+      "id": 12,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_012_model_4_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_012_model_4_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 8192,
+        "shape_oc_ic_kh_kw": [
+          64,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_012_model_4_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_012_model_4_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.091564967
+      }
+    },
+    "model.5.cv1.conv": {
+      "name": "model.5.cv1.conv",
+      "id": 13,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_013_model_5_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_013_model_5_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 8192,
+        "shape_oc_ic_kh_kw": [
+          128,
+          64,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_013_model_5_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_013_model_5_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.065263973
+      }
+    },
+    "model.5.cv2.conv": {
+      "name": "model.5.cv2.conv",
+      "id": 14,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_014_model_5_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_014_model_5_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1152,
+        "shape_oc_ic_kh_kw": [
+          128,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_014_model_5_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_014_model_5_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.12727799
+      }
+    },
+    "model.6.cv1.conv": {
+      "name": "model.6.cv1.conv",
+      "id": 15,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_015_model_6_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_015_model_6_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 16384,
+        "shape_oc_ic_kh_kw": [
+          128,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_015_model_6_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_015_model_6_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.146312083
+      }
+    },
+    "model.6.m.0.cv1.conv": {
+      "name": "model.6.m.0.cv1.conv",
+      "id": 16,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_016_model_6_m_0_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_016_model_6_m_0_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_016_model_6_m_0_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_016_model_6_m_0_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.120432839
+      }
+    },
+    "model.6.m.0.cv2.conv": {
+      "name": "model.6.m.0.cv2.conv",
+      "id": 17,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_017_model_6_m_0_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_017_model_6_m_0_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_017_model_6_m_0_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_017_model_6_m_0_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.071550054
+      }
+    },
+    "model.6.m.1.cv1.conv": {
+      "name": "model.6.m.1.cv1.conv",
+      "id": 18,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_018_model_6_m_1_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_018_model_6_m_1_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_018_model_6_m_1_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_018_model_6_m_1_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.07845808
+      }
+    },
+    "model.6.m.1.cv2.conv": {
+      "name": "model.6.m.1.cv2.conv",
+      "id": 19,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_019_model_6_m_1_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_019_model_6_m_1_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_019_model_6_m_1_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_019_model_6_m_1_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.074888199
+      }
+    },
+    "model.6.cv2.conv": {
+      "name": "model.6.cv2.conv",
+      "id": 20,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_020_model_6_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_020_model_6_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          128,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_020_model_6_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_020_model_6_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.096292811
+      }
+    },
+    "model.7.cv1.conv": {
+      "name": "model.7.cv1.conv",
+      "id": 21,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_021_model_7_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_021_model_7_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          256,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_021_model_7_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_021_model_7_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.103008398
+      }
+    },
+    "model.7.cv2.conv": {
+      "name": "model.7.cv2.conv",
+      "id": 22,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_022_model_7_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_022_model_7_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 2304,
+        "shape_oc_ic_kh_kw": [
+          256,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_022_model_7_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_022_model_7_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.078916309
+      }
+    },
+    "model.8.cv1.conv": {
+      "name": "model.8.cv1.conv",
+      "id": 23,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_023_model_8_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_023_model_8_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 65536,
+        "shape_oc_ic_kh_kw": [
+          256,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_023_model_8_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_023_model_8_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.163199853
+      }
+    },
+    "model.8.m.0.cv1.conv": {
+      "name": "model.8.m.0.cv1.conv",
+      "id": 24,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_024_model_8_m_0_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_024_model_8_m_0_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 147456,
+        "shape_oc_ic_kh_kw": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_024_model_8_m_0_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_024_model_8_m_0_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.092085057
+      }
+    },
+    "model.8.m.0.cv2.conv": {
+      "name": "model.8.m.0.cv2.conv",
+      "id": 25,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_025_model_8_m_0_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_025_model_8_m_0_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 147456,
+        "shape_oc_ic_kh_kw": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_025_model_8_m_0_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_025_model_8_m_0_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.103326392
+      }
+    },
+    "model.8.cv2.conv": {
+      "name": "model.8.cv2.conv",
+      "id": 26,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_026_model_8_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_026_model_8_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 98304,
+        "shape_oc_ic_kh_kw": [
+          256,
+          384,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_026_model_8_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_026_model_8_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.141667253
+      }
+    },
+    "model.9.cv1.conv": {
+      "name": "model.9.cv1.conv",
+      "id": 27,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_027_model_9_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_027_model_9_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          128,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_027_model_9_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_027_model_9_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.102655366
+      }
+    },
+    "model.9.cv2.conv": {
+      "name": "model.9.cv2.conv",
+      "id": 28,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_028_model_9_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_028_model_9_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 131072,
+        "shape_oc_ic_kh_kw": [
+          256,
+          512,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_028_model_9_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_028_model_9_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.059229783
+      }
+    },
+    "model.10.cv1.conv": {
+      "name": "model.10.cv1.conv",
+      "id": 29,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_029_model_10_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_029_model_10_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 65536,
+        "shape_oc_ic_kh_kw": [
+          256,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_029_model_10_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_029_model_10_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.094582685
+      }
+    },
+    "model.10.attn.qkv.conv": {
+      "name": "model.10.attn.qkv.conv",
+      "id": 30,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_030_model_10_attn_qkv_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_030_model_10_attn_qkv_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          256,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_030_model_10_attn_qkv_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_030_model_10_attn_qkv_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.10101066
+      }
+    },
+    "model.10.attn.pe.conv": {
+      "name": "model.10.attn.pe.conv",
+      "id": 31,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_031_model_10_attn_pe_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_031_model_10_attn_pe_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1152,
+        "shape_oc_ic_kh_kw": [
+          128,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_031_model_10_attn_pe_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_031_model_10_attn_pe_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.083381112
+      }
+    },
+    "model.10.attn.proj.conv": {
+      "name": "model.10.attn.proj.conv",
+      "id": 32,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_032_model_10_attn_proj_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_032_model_10_attn_proj_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 16384,
+        "shape_oc_ic_kh_kw": [
+          128,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_032_model_10_attn_proj_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_032_model_10_attn_proj_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.066807724
+      }
+    },
+    "model.10.ffn.0.conv": {
+      "name": "model.10.ffn.0.conv",
+      "id": 33,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_033_model_10_ffn_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_033_model_10_ffn_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          256,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_033_model_10_ffn_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_033_model_10_ffn_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.055366509
+      }
+    },
+    "model.10.ffn.1.conv": {
+      "name": "model.10.ffn.1.conv",
+      "id": 34,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_034_model_10_ffn_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_034_model_10_ffn_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          128,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_034_model_10_ffn_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_034_model_10_ffn_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.086733315
+      }
+    },
+    "model.10.cv2.conv": {
+      "name": "model.10.cv2.conv",
+      "id": 35,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_035_model_10_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_035_model_10_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 65536,
+        "shape_oc_ic_kh_kw": [
+          256,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_035_model_10_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_035_model_10_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.057799617
+      }
+    },
+    "model.13.cv1.conv": {
+      "name": "model.13.cv1.conv",
+      "id": 36,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_036_model_13_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_036_model_13_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 49152,
+        "shape_oc_ic_kh_kw": [
+          128,
+          384,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_036_model_13_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_036_model_13_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.098526722
+      }
+    },
+    "model.13.m.0.cv1.conv": {
+      "name": "model.13.m.0.cv1.conv",
+      "id": 37,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_037_model_13_m_0_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_037_model_13_m_0_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_037_model_13_m_0_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_037_model_13_m_0_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.076491829
+      }
+    },
+    "model.13.m.0.cv2.conv": {
+      "name": "model.13.m.0.cv2.conv",
+      "id": 38,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_038_model_13_m_0_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_038_model_13_m_0_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_038_model_13_m_0_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_038_model_13_m_0_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.063616174
+      }
+    },
+    "model.13.cv2.conv": {
+      "name": "model.13.cv2.conv",
+      "id": 39,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_039_model_13_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_039_model_13_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 24576,
+        "shape_oc_ic_kh_kw": [
+          128,
+          192,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_039_model_13_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_039_model_13_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.072934113
+      }
+    },
+    "model.16.cv1.conv": {
+      "name": "model.16.cv1.conv",
+      "id": 40,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_040_model_16_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_040_model_16_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 12288,
+        "shape_oc_ic_kh_kw": [
+          64,
+          192,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_040_model_16_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_040_model_16_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.088948648
+      }
+    },
+    "model.16.m.0.cv1.conv": {
+      "name": "model.16.m.0.cv1.conv",
+      "id": 41,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_041_model_16_m_0_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_041_model_16_m_0_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 9216,
+        "shape_oc_ic_kh_kw": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_041_model_16_m_0_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_041_model_16_m_0_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.066878439
+      }
+    },
+    "model.16.m.0.cv2.conv": {
+      "name": "model.16.m.0.cv2.conv",
+      "id": 42,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_042_model_16_m_0_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_042_model_16_m_0_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 9216,
+        "shape_oc_ic_kh_kw": [
+          32,
+          32,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_042_model_16_m_0_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_042_model_16_m_0_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 32,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.076860075
+      }
+    },
+    "model.16.cv2.conv": {
+      "name": "model.16.cv2.conv",
+      "id": 43,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_043_model_16_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_043_model_16_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 6144,
+        "shape_oc_ic_kh_kw": [
+          64,
+          96,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_043_model_16_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_043_model_16_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.073693531
+      }
+    },
+    "model.17.conv": {
+      "name": "model.17.conv",
+      "id": 44,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_044_model_17_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_044_model_17_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_044_model_17_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_044_model_17_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.093256748
+      }
+    },
+    "model.19.cv1.conv": {
+      "name": "model.19.cv1.conv",
+      "id": 45,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_045_model_19_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_045_model_19_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 24576,
+        "shape_oc_ic_kh_kw": [
+          128,
+          192,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_045_model_19_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_045_model_19_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.084669646
+      }
+    },
+    "model.19.m.0.cv1.conv": {
+      "name": "model.19.m.0.cv1.conv",
+      "id": 46,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_046_model_19_m_0_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_046_model_19_m_0_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_046_model_19_m_0_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_046_model_19_m_0_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.112798736
+      }
+    },
+    "model.19.m.0.cv2.conv": {
+      "name": "model.19.m.0.cv2.conv",
+      "id": 47,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_047_model_19_m_0_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_047_model_19_m_0_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_047_model_19_m_0_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_047_model_19_m_0_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.075138115
+      }
+    },
+    "model.19.cv2.conv": {
+      "name": "model.19.cv2.conv",
+      "id": 48,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_048_model_19_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_048_model_19_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 24576,
+        "shape_oc_ic_kh_kw": [
+          128,
+          192,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_048_model_19_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_048_model_19_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.10990251
+      }
+    },
+    "model.20.cv1.conv": {
+      "name": "model.20.cv1.conv",
+      "id": 49,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_049_model_20_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_049_model_20_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 16384,
+        "shape_oc_ic_kh_kw": [
+          128,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_049_model_20_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_049_model_20_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.155525208
+      }
+    },
+    "model.20.cv2.conv": {
+      "name": "model.20.cv2.conv",
+      "id": 50,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_050_model_20_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_050_model_20_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1152,
+        "shape_oc_ic_kh_kw": [
+          128,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_050_model_20_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_050_model_20_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.137265288
+      }
+    },
+    "model.22.cv1.conv": {
+      "name": "model.22.cv1.conv",
+      "id": 51,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_051_model_22_cv1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_051_model_22_cv1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 98304,
+        "shape_oc_ic_kh_kw": [
+          256,
+          384,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_051_model_22_cv1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_051_model_22_cv1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.163047926
+      }
+    },
+    "model.22.m.0.cv1.0.conv": {
+      "name": "model.22.m.0.cv1.0.conv",
+      "id": 52,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_052_model_22_m_0_cv1_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_052_model_22_m_0_cv1_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1152,
+        "shape_oc_ic_kh_kw": [
+          128,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_052_model_22_m_0_cv1_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_052_model_22_m_0_cv1_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.085028506
+      }
+    },
+    "model.22.m.0.cv1.1.conv": {
+      "name": "model.22.m.0.cv1.1.conv",
+      "id": 53,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_053_model_22_m_0_cv1_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_053_model_22_m_0_cv1_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          256,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_053_model_22_m_0_cv1_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_053_model_22_m_0_cv1_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.087335699
+      }
+    },
+    "model.22.m.0.cv1.2.conv": {
+      "name": "model.22.m.0.cv1.2.conv",
+      "id": 54,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_054_model_22_m_0_cv1_2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_054_model_22_m_0_cv1_2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 12544,
+        "shape_oc_ic_kh_kw": [
+          256,
+          1,
+          7,
+          7
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_054_model_22_m_0_cv1_2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_054_model_22_m_0_cv1_2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.08071177
+      }
+    },
+    "model.22.m.0.cv1.3.conv": {
+      "name": "model.22.m.0.cv1.3.conv",
+      "id": 55,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_055_model_22_m_0_cv1_3_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_055_model_22_m_0_cv1_3_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 32768,
+        "shape_oc_ic_kh_kw": [
+          128,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_055_model_22_m_0_cv1_3_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_055_model_22_m_0_cv1_3_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.123074194
+      }
+    },
+    "model.22.m.0.cv1.4.conv": {
+      "name": "model.22.m.0.cv1.4.conv",
+      "id": 56,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_056_model_22_m_0_cv1_4_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_056_model_22_m_0_cv1_4_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1152,
+        "shape_oc_ic_kh_kw": [
+          128,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_056_model_22_m_0_cv1_4_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_056_model_22_m_0_cv1_4_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.106176406
+      }
+    },
+    "model.22.cv2.conv": {
+      "name": "model.22.cv2.conv",
+      "id": 57,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_057_model_22_cv2_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_057_model_22_cv2_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 98304,
+        "shape_oc_ic_kh_kw": [
+          256,
+          384,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_057_model_22_cv2_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_057_model_22_cv2_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.135378019
+      }
+    },
+    "model.23.one2one_cv2.0.0.conv": {
+      "name": "model.23.one2one_cv2.0.0.conv",
+      "id": 58,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_058_model_23_one2one_cv2_0_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_058_model_23_one2one_cv2_0_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_058_model_23_one2one_cv2_0_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_058_model_23_one2one_cv2_0_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.108219995
+      }
+    },
+    "model.23.one2one_cv2.0.1.conv": {
+      "name": "model.23.one2one_cv2.0.1.conv",
+      "id": 59,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_059_model_23_one2one_cv2_0_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_059_model_23_one2one_cv2_0_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_059_model_23_one2one_cv2_0_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_059_model_23_one2one_cv2_0_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.20033958
+      }
+    },
+    "model.23.one2one_cv2.0.2": {
+      "name": "model.23.one2one_cv2.0.2",
+      "id": 60,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_060_model_23_one2one_cv2_0_2_w.mem",
+        "file_coe": "hwconst/mem/layer_060_model_23_one2one_cv2_0_2_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 4096,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_060_model_23_one2one_cv2_0_2_b.mem",
+        "file_coe": "hwconst/mem/layer_060_model_23_one2one_cv2_0_2_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.513190983
+      }
+    },
+    "model.23.one2one_cv2.1.0.conv": {
+      "name": "model.23.one2one_cv2.1.0.conv",
+      "id": 61,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_061_model_23_one2one_cv2_1_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_061_model_23_one2one_cv2_1_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 73728,
+        "shape_oc_ic_kh_kw": [
+          64,
+          128,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_061_model_23_one2one_cv2_1_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_061_model_23_one2one_cv2_1_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.16512204
+      }
+    },
+    "model.23.one2one_cv2.1.1.conv": {
+      "name": "model.23.one2one_cv2.1.1.conv",
+      "id": 62,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_062_model_23_one2one_cv2_1_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_062_model_23_one2one_cv2_1_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_062_model_23_one2one_cv2_1_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_062_model_23_one2one_cv2_1_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.223864713
+      }
+    },
+    "model.23.one2one_cv2.1.2": {
+      "name": "model.23.one2one_cv2.1.2",
+      "id": 63,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_063_model_23_one2one_cv2_1_2_w.mem",
+        "file_coe": "hwconst/mem/layer_063_model_23_one2one_cv2_1_2_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 4096,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_063_model_23_one2one_cv2_1_2_b.mem",
+        "file_coe": "hwconst/mem/layer_063_model_23_one2one_cv2_1_2_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.362562495
+      }
+    },
+    "model.23.one2one_cv2.2.0.conv": {
+      "name": "model.23.one2one_cv2.2.0.conv",
+      "id": 64,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_064_model_23_one2one_cv2_2_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_064_model_23_one2one_cv2_2_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 147456,
+        "shape_oc_ic_kh_kw": [
+          64,
+          256,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_064_model_23_one2one_cv2_2_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_064_model_23_one2one_cv2_2_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.165167095
+      }
+    },
+    "model.23.one2one_cv2.2.1.conv": {
+      "name": "model.23.one2one_cv2.2.1.conv",
+      "id": 65,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_065_model_23_one2one_cv2_2_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_065_model_23_one2one_cv2_2_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 36864,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_065_model_23_one2one_cv2_2_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_065_model_23_one2one_cv2_2_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.110284175
+      }
+    },
+    "model.23.one2one_cv2.2.2": {
+      "name": "model.23.one2one_cv2.2.2",
+      "id": 66,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_066_model_23_one2one_cv2_2_2_w.mem",
+        "file_coe": "hwconst/mem/layer_066_model_23_one2one_cv2_2_2_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 4096,
+        "shape_oc_ic_kh_kw": [
+          64,
+          64,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_066_model_23_one2one_cv2_2_2_b.mem",
+        "file_coe": "hwconst/mem/layer_066_model_23_one2one_cv2_2_2_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.425744965
+      }
+    },
+    "model.23.one2one_cv3.0.0.0.conv": {
+      "name": "model.23.one2one_cv3.0.0.0.conv",
+      "id": 67,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_067_model_23_one2one_cv3_0_0_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_067_model_23_one2one_cv3_0_0_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 576,
+        "shape_oc_ic_kh_kw": [
+          64,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_067_model_23_one2one_cv3_0_0_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_067_model_23_one2one_cv3_0_0_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 64,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.095947784
+      }
+    },
+    "model.23.one2one_cv3.0.0.1.conv": {
+      "name": "model.23.one2one_cv3.0.0.1.conv",
+      "id": 68,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_068_model_23_one2one_cv3_0_0_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_068_model_23_one2one_cv3_0_0_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 5120,
+        "shape_oc_ic_kh_kw": [
+          80,
+          64,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_068_model_23_one2one_cv3_0_0_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_068_model_23_one2one_cv3_0_0_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.048137567
+      }
+    },
+    "model.23.one2one_cv3.0.1.0.conv": {
+      "name": "model.23.one2one_cv3.0.1.0.conv",
+      "id": 69,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_069_model_23_one2one_cv3_0_1_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_069_model_23_one2one_cv3_0_1_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 720,
+        "shape_oc_ic_kh_kw": [
+          80,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_069_model_23_one2one_cv3_0_1_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_069_model_23_one2one_cv3_0_1_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.124812584
+      }
+    },
+    "model.23.one2one_cv3.0.1.1.conv": {
+      "name": "model.23.one2one_cv3.0.1.1.conv",
+      "id": 70,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_070_model_23_one2one_cv3_0_1_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_070_model_23_one2one_cv3_0_1_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 6400,
+        "shape_oc_ic_kh_kw": [
+          80,
+          80,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_070_model_23_one2one_cv3_0_1_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_070_model_23_one2one_cv3_0_1_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.340255467
+      }
+    },
+    "model.23.one2one_cv3.0.2": {
+      "name": "model.23.one2one_cv3.0.2",
+      "id": 71,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_071_model_23_one2one_cv3_0_2_w.mem",
+        "file_coe": "hwconst/mem/layer_071_model_23_one2one_cv3_0_2_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 6400,
+        "shape_oc_ic_kh_kw": [
+          80,
+          80,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_071_model_23_one2one_cv3_0_2_b.mem",
+        "file_coe": "hwconst/mem/layer_071_model_23_one2one_cv3_0_2_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.771016399
+      }
+    },
+    "model.23.one2one_cv3.1.0.0.conv": {
+      "name": "model.23.one2one_cv3.1.0.0.conv",
+      "id": 72,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_072_model_23_one2one_cv3_1_0_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_072_model_23_one2one_cv3_1_0_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 1152,
+        "shape_oc_ic_kh_kw": [
+          128,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_072_model_23_one2one_cv3_1_0_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_072_model_23_one2one_cv3_1_0_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 128,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.31913487
+      }
+    },
+    "model.23.one2one_cv3.1.0.1.conv": {
+      "name": "model.23.one2one_cv3.1.0.1.conv",
+      "id": 73,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_073_model_23_one2one_cv3_1_0_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_073_model_23_one2one_cv3_1_0_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 10240,
+        "shape_oc_ic_kh_kw": [
+          80,
+          128,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_073_model_23_one2one_cv3_1_0_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_073_model_23_one2one_cv3_1_0_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.24835953
+      }
+    },
+    "model.23.one2one_cv3.1.1.0.conv": {
+      "name": "model.23.one2one_cv3.1.1.0.conv",
+      "id": 74,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_074_model_23_one2one_cv3_1_1_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_074_model_23_one2one_cv3_1_1_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 720,
+        "shape_oc_ic_kh_kw": [
+          80,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_074_model_23_one2one_cv3_1_1_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_074_model_23_one2one_cv3_1_1_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.264502788
+      }
+    },
+    "model.23.one2one_cv3.1.1.1.conv": {
+      "name": "model.23.one2one_cv3.1.1.1.conv",
+      "id": 75,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_075_model_23_one2one_cv3_1_1_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_075_model_23_one2one_cv3_1_1_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 6400,
+        "shape_oc_ic_kh_kw": [
+          80,
+          80,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_075_model_23_one2one_cv3_1_1_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_075_model_23_one2one_cv3_1_1_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.637814439
+      }
+    },
+    "model.23.one2one_cv3.1.2": {
+      "name": "model.23.one2one_cv3.1.2",
+      "id": 76,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_076_model_23_one2one_cv3_1_2_w.mem",
+        "file_coe": "hwconst/mem/layer_076_model_23_one2one_cv3_1_2_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 6400,
+        "shape_oc_ic_kh_kw": [
+          80,
+          80,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_076_model_23_one2one_cv3_1_2_b.mem",
+        "file_coe": "hwconst/mem/layer_076_model_23_one2one_cv3_1_2_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 1.343821128
+      }
+    },
+    "model.23.one2one_cv3.2.0.0.conv": {
+      "name": "model.23.one2one_cv3.2.0.0.conv",
+      "id": 77,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_077_model_23_one2one_cv3_2_0_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_077_model_23_one2one_cv3_2_0_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 2304,
+        "shape_oc_ic_kh_kw": [
+          256,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_077_model_23_one2one_cv3_2_0_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_077_model_23_one2one_cv3_2_0_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 256,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.851739718
+      }
+    },
+    "model.23.one2one_cv3.2.0.1.conv": {
+      "name": "model.23.one2one_cv3.2.0.1.conv",
+      "id": 78,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_078_model_23_one2one_cv3_2_0_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_078_model_23_one2one_cv3_2_0_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 20480,
+        "shape_oc_ic_kh_kw": [
+          80,
+          256,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_078_model_23_one2one_cv3_2_0_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_078_model_23_one2one_cv3_2_0_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.165498989
+      }
+    },
+    "model.23.one2one_cv3.2.1.0.conv": {
+      "name": "model.23.one2one_cv3.2.1.0.conv",
+      "id": 79,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_079_model_23_one2one_cv3_2_1_0_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_079_model_23_one2one_cv3_2_1_0_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 720,
+        "shape_oc_ic_kh_kw": [
+          80,
+          1,
+          3,
+          3
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_079_model_23_one2one_cv3_2_1_0_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_079_model_23_one2one_cv3_2_1_0_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.144995757
+      }
+    },
+    "model.23.one2one_cv3.2.1.1.conv": {
+      "name": "model.23.one2one_cv3.2.1.1.conv",
+      "id": 80,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_080_model_23_one2one_cv3_2_1_1_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_080_model_23_one2one_cv3_2_1_1_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 6400,
+        "shape_oc_ic_kh_kw": [
+          80,
+          80,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_080_model_23_one2one_cv3_2_1_1_conv_b.mem",
+        "file_coe": "hwconst/mem/layer_080_model_23_one2one_cv3_2_1_1_conv_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.498915725
+      }
+    },
+    "model.23.one2one_cv3.2.2": {
+      "name": "model.23.one2one_cv3.2.2",
+      "id": 81,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_081_model_23_one2one_cv3_2_2_w.mem",
+        "file_coe": "hwconst/mem/layer_081_model_23_one2one_cv3_2_2_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 6400,
+        "shape_oc_ic_kh_kw": [
+          80,
+          80,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      },
+      "bias": {
+        "file_mem": "hwconst/mem/layer_081_model_23_one2one_cv3_2_2_b.mem",
+        "file_coe": "hwconst/mem/layer_081_model_23_one2one_cv3_2_2_b.coe",
+        "dtype": "int32",
+        "bits": 32,
+        "depth": 80,
+        "formula": "round(bias_fp32 / (weight_scale[oc] * act_scale_in))",
+        "act_scale_in": 0.651565492
+      }
+    },
+    "model.23.dfl.conv": {
+      "name": "model.23.dfl.conv",
+      "id": 82,
+      "weight": {
+        "file_mem": "hwconst/mem/layer_082_model_23_dfl_conv_w.mem",
+        "file_coe": "hwconst/mem/layer_082_model_23_dfl_conv_w.coe",
+        "dtype": "int8",
+        "bits": 8,
+        "depth": 16,
+        "shape_oc_ic_kh_kw": [
+          1,
+          16,
+          1,
+          1
+        ],
+        "flatten_order": "c_out,c_in,kh,kw (row-major, MSB-first hex)"
+      }
+    }
+  }
+}

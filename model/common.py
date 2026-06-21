@@ -71,8 +71,22 @@ def load_detection_model(weights: Path = BASE_WEIGHTS):
     return model
 
 
+def torch_device(spec: str):
+    """Normalize an ultralytics-style device spec ('0', 'cpu', 'cuda:0') to a
+    torch device. Bare integer strings mean CUDA ordinals."""
+    import torch
+
+    if spec is None or spec == "":
+        return torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    s = str(spec)
+    if s.isdigit():
+        return torch.device(f"cuda:{s}")
+    return torch.device(s)
+
+
 def calib_images(n: int, imgsz: int = IMGSZ, dry_run: bool = False):
-    """Yield up to n preprocessed CHW tensors from COCO val (synthetic fallback)."""
+    """Yield up to n (CHW float32 [0,1] tensor, meta) pairs from COCO val
+    (synthetic fallback if images are absent)."""
     import torch
 
     paths = coco_val_image_paths(n)

@@ -1,0 +1,19 @@
+{
+  "task": "STEP 5 freeze",
+  "generated_utc": "2026-06-21T07:33:38Z",
+  "no_training": true,
+  "source_base": "model\\yolov10n.pt",
+  "quant_scales": "hwconst\\quant_scales.json",
+  "artifacts": {
+    "fused_fp32": {
+      "file": "yolov10n_fused_fp32.pt",
+      "sha256_16": "d1fd288529f8c9ce"
+    },
+    "int8_frozen": {
+      "file": "yolov10n_int8_frozen.pt",
+      "sha256_16": "88d95e84fed61a73",
+      "num_layers": 83
+    }
+  },
+  "stable_path": "model/frozen/yolov10n_int8_frozen.pt"
+}

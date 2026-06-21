@@ -1,0 +1,13 @@
+== STEP 4 PTQ  ==
+  weights=D:\Projects\FPGA\SiliconYOLO\model\yolov10n.pt  calib_images=256  device=cuda:0  imgsz=640
+YOLOv10n summary (fused): 101 layers, 2,299,264 parameters, 0 gradients, 6.7 GFLOPs
+  fused model: 2.299 M params, 83 Conv2d layers
+    calibrated 50/256
+    calibrated 100/256
+    calibrated 150/256
+    calibrated 200/256
+    calibrated 250/256
+  calibration: ran 256 image(s) through 83 hooked layers
+  wrote 83 layer scale sets -> D:\Projects\FPGA\SiliconYOLO\hwconst\quant_scales.json
+  INT4 candidates: 44/83 layers
+  done in 11.7s
