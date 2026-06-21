@@ -1,6 +1,8 @@
 # 📝 Devpost Submission — DRAFT
 **UC Berkeley AI Hackathon 2026 (Cal Hacks)** · Devpost: ai-hackathon-2026.devpost.com
 
+
+![Silicon YOLO — fixed-weight YOLOv10n on Kintex-7](showcase/devpost_thumbnail.png)
 ---
 
 ## Project name

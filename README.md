@@ -36,7 +36,9 @@ INT8 stem feature maps (activation snapshot):
 
 ## 🎬 Demo video
 
-**[▶ `video/renders/silicon_yolo_v10n_demo_with_cost.mp4`](video/renders/silicon_yolo_v10n_demo_with_cost.mp4)** (98 s, 1080p) — the full story:
+[![▶ Watch the Silicon YOLO demo](docs/showcase/video_poster.png)](video/renders/silicon_yolo_v10n_demo_with_cost.mp4)
+
+**[▶ Watch the 98-second demo (1080p)](video/renders/silicon_yolo_v10n_demo_with_cost.mp4)** — the full story:
 
 1. **Title** — freezing a neural net into silicon.
 2. **Pipeline** — YOLOv10n → INT8 PTQ → frozen weights → CSD RTL → Kintex-7.
