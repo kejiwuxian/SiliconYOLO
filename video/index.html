@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Silicon YOLO — YOLOv10n</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #05070d;
+        font-family: "Inter", sans-serif;
+        color: #eaf2ff;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---------- persistent background ---------- */
+      #bg { position: absolute; inset: 0; z-index: 0; background: #05070d; }
+      .glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        will-change: transform, opacity;
+      }
+      #glow-blue {
+        width: 1100px; height: 1100px;
+        top: -360px; left: -300px;
+        background: radial-gradient(circle, rgba(59,169,255,0.40) 0%, rgba(59,169,255,0) 68%);
+        opacity: 0.32;
+      }
+      #glow-amber {
+        width: 1000px; height: 1000px;
+        bottom: -340px; right: -260px;
+        background: radial-gradient(circle, rgba(255,178,62,0.34) 0%, rgba(255,178,62,0) 68%);
+        opacity: 0.26;
+      }
+      #grid {
+        position: absolute; inset: -2px;
+        background-image:
+          linear-gradient(rgba(123,141,166,0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(123,141,166,0.07) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 35%, transparent 85%);
+        -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 35%, transparent 85%);
+        will-change: transform;
+      }
+      #vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse 75% 75% at 50% 50%, rgba(5,7,13,0) 55%, rgba(5,7,13,0.7) 100%);
+      }
+
+      /* ---------- scenes ---------- */
+      .scene {
+        position: absolute; inset: 0; z-index: 10;
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 110px 150px;
+        opacity: 0;
+        will-change: opacity;
+      }
+      .kicker {
+        font-size: 24px; font-weight: 600; letter-spacing: 0.32em;
+        text-transform: uppercase; color: #3ba9ff;
+      }
+      .eyebrow {
+        font-size: 22px; font-weight: 600; letter-spacing: 0.3em;
+        text-transform: uppercase; color: #8a9bb4;
+      }
+      h1 { font-weight: 800; letter-spacing: -0.02em; line-height: 0.98; }
+      .muted { color: #8a9bb4; }
+      .blue { color: #3ba9ff; }
+      .amber { color: #ffb23e; }
+      .tnum { font-variant-numeric: tabular-nums; }
+
+      /* caption rail (subtle) */
+      #caption-wrap {
+        position: absolute; bottom: 64px; left: 0; right: 0; z-index: 20;
+        display: flex; justify-content: center; pointer-events: none;
+      }
+      #caption {
+        font-size: 26px; font-weight: 500; letter-spacing: 0.01em;
+        color: rgba(234,242,255,0.82);
+        padding: 10px 26px; border-radius: 999px;
+        background: rgba(10,16,26,0.55);
+        border: 1px solid rgba(123,141,166,0.18);
+        backdrop-filter: blur(6px);
+        opacity: 0;
+      }
+
+      /* ---------- S1 hook ---------- */
+      #s1 { padding: 0; }
+      .hero-img-wrap { position: absolute; inset: 0; overflow: hidden; will-change: opacity; }
+      .hero-img {
+        position: absolute; inset: -4%; width: 108%; height: 108%;
+        object-fit: cover; will-change: transform;
+      }
+      .hero-scrim {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 60% 80% at 28% 50%, rgba(5,7,13,0.78) 0%, rgba(5,7,13,0.25) 60%, rgba(5,7,13,0) 100%),
+          linear-gradient(180deg, rgba(5,7,13,0.55) 0%, rgba(5,7,13,0.1) 35%, rgba(5,7,13,0.6) 100%);
+      }
+      #s1 .s1-content {
+        position: absolute; left: 150px; bottom: 150px; right: 150px;
+        display: flex; flex-direction: column; gap: 26px;
+      }
+      #s1 h1 { font-size: 168px; }
+      #s1 .sub { font-size: 46px; font-weight: 500; color: #cdd9ec; max-width: 1150px; }
+      #s1 .s1-kicker { display: flex; align-items: center; gap: 18px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: #ffb23e; box-shadow: 0 0 16px #ffb23e; }
+
+      /* ---------- generic big statement ---------- */
+      .statement { font-size: 118px; font-weight: 800; line-height: 1.0; max-width: 1500px; }
+      .lead { font-size: 38px; font-weight: 500; color: #cdd9ec; max-width: 1180px; line-height: 1.32; }
+
+      /* pills */
+      .pill-row { display: flex; gap: 22px; flex-wrap: wrap; }
+      .pill {
+        font-size: 28px; font-weight: 600; color: #eaf2ff;
+        padding: 18px 30px; border-radius: 16px;
+        background: rgba(12,17,25,0.85);
+        border: 1px solid rgba(59,169,255,0.28);
+      }
+      .pill.amber-b { border-color: rgba(255,178,62,0.32); }
+
+      /* ---------- S2 NMS-free spotlight ---------- */
+      #s2 .nms-compare { display: flex; align-items: center; gap: 40px; margin-top: 46px; }
+      .arch-card {
+        position: relative; width: 560px; padding: 30px 34px; border-radius: 20px;
+        background: rgba(12,17,25,0.9); border: 1px solid rgba(123,141,166,0.2);
+      }
+      .arch-card .name { font-size: 30px; font-weight: 800; }
+      .arch-card .chain { display: flex; align-items: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+      .blk {
+        font-size: 21px; font-weight: 600; padding: 12px 18px; border-radius: 12px;
+        background: rgba(59,169,255,0.1); border: 1px solid rgba(59,169,255,0.3); color: #cfe4ff;
+      }
+      .blk.nms {
+        background: rgba(255,90,90,0.1); border: 1px solid rgba(255,90,90,0.45); color: #ffb4b4;
+        position: relative;
+      }
+      .blk.nms .strike {
+        position: absolute; left: 8%; right: 8%; top: 50%; height: 3px;
+        background: #ff5a5a; transform: scaleX(0); transform-origin: left center;
+        border-radius: 2px; will-change: transform;
+      }
+      .arrow { font-size: 22px; color: #8a9bb4; }
+      .vs { font-size: 28px; font-weight: 800; color: #8a9bb4; }
+      .arch-card.v10 { border-color: rgba(255,178,62,0.4); }
+      .arch-card .tagline { font-size: 21px; font-weight: 600; margin-top: 18px; }
+
+      /* ---------- S3 flow pipeline ---------- */
+      #s3 { justify-content: center; }
+      .flow { display: flex; align-items: stretch; gap: 0; margin-top: 50px; }
+      .step {
+        position: relative; flex: 1; padding: 28px 22px; border-radius: 16px;
+        background: rgba(12,17,25,0.9); border: 1px solid rgba(123,141,166,0.2);
+        display: flex; flex-direction: column; gap: 12px; opacity: 0;
+      }
+      .step .num {
+        font-size: 20px; font-weight: 800; color: #05070d;
+        width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        background: #3ba9ff;
+      }
+      .step.amber-step .num { background: #ffb23e; }
+      .step .st { font-size: 26px; font-weight: 800; line-height: 1.1; }
+      .step .sd { font-size: 20px; font-weight: 500; color: #aebcd2; line-height: 1.3; }
+      .flow-arrow { display: flex; align-items: center; justify-content: center; width: 46px; color: #3ba9ff; font-size: 30px; flex: none; opacity: 0; }
+
+      /* ---------- S4 results ---------- */
+      #s4 { padding: 96px 150px; justify-content: flex-start; }
+      .panel { position: absolute; left: 150px; right: 150px; top: 300px; }
+      .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+      .metric {
+        background: rgba(12,17,25,0.86); border: 1px solid rgba(123,141,166,0.18);
+        border-radius: 20px; padding: 34px 34px 30px; display: flex; flex-direction: column; gap: 16px;
+      }
+      .metric .label { font-size: 22px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #8a9bb4; }
+      .metric .value { font-size: 84px; font-weight: 800; line-height: 1.08; }
+      .metric .value .unit { font-size: 32px; font-weight: 600; color: #8a9bb4; margin-left: 8px; }
+      .metric .note { font-size: 23px; font-weight: 500; color: #aebcd2; }
+      .metric .note.amber { color: #ffb23e; }
+      .bar { height: 10px; border-radius: 6px; background: rgba(123,141,166,0.18); overflow: hidden; margin-top: 4px; }
+      .bar > span { display: block; height: 100%; width: 0%; border-radius: 6px; background: linear-gradient(90deg, #3ba9ff, #79c8ff); }
+      .bar.amber > span { background: linear-gradient(90deg, #ffb23e, #ffcd7d); }
+
+      .hw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 30px; }
+      .hwm { background: rgba(12,17,25,0.86); border: 1px solid rgba(123,141,166,0.18); border-radius: 16px; padding: 26px 28px; }
+      .hwm .v { font-size: 56px; font-weight: 800; line-height: 1; }
+      .hwm .v .unit { font-size: 24px; font-weight: 600; color: #8a9bb4; margin-left: 6px; }
+      .hwm .k { font-size: 20px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #8a9bb4; margin-top: 10px; }
+      .hwm.zero { border-color: rgba(255,178,62,0.4); }
+      .hwm.zero .v { color: #ffb23e; }
+
+      .verified {
+        position: absolute; left: 150px; right: 150px; top: 360px;
+        display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center;
+      }
+      .verified .seal {
+        font-size: 30px; font-weight: 700; letter-spacing: 0.06em;
+        padding: 22px 40px; border-radius: 999px;
+        border: 1px solid rgba(59,169,255,0.45); color: #eaf2ff;
+        background: rgba(59,169,255,0.08);
+      }
+
+      /* ---------- S5 why ---------- */
+      .why-row { display: flex; gap: 22px; flex-wrap: wrap; }
+      .why-chip {
+        font-size: 27px; font-weight: 600; padding: 18px 28px; border-radius: 14px;
+        background: rgba(12,17,25,0.85); border: 1px solid rgba(123,141,166,0.2); color: #cdd9ec;
+      }
+
+      /* ---------- S6 close ---------- */
+      #s6 { align-items: center; text-align: center; }
+      #s6 .closer { font-size: 80px; font-weight: 800; line-height: 1.08; max-width: 1500px; margin: 0 auto; }
+      #s6 .endcard { font-size: 40px; font-weight: 700; color: #cdd9ec; margin-top: 36px; letter-spacing: 0.01em; }
+      #s6 .endcard .sep { color: #3a4a63; margin: 0 14px; }
+      #s6 .credits { font-size: 26px; font-weight: 600; letter-spacing: 0.06em; color: #8a9bb4; margin-top: 44px; }
+      #s6 .credits .blue { color: #3ba9ff; } #s6 .credits .amber { color: #ffb23e; }
+
+      #blackout { position: absolute; inset: 0; z-index: 40; background: #05070d; opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="root"
+      data-start="0"
+      data-duration="90"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- ===== persistent background ===== -->
+      <div id="bg">
+        <div id="glow-blue" class="glow"></div>
+        <div id="glow-amber" class="glow"></div>
+        <div id="grid"></div>
+        <div id="vignette"></div>
+      </div>
+
+      <!-- ===== S1 — HOOK ===== -->
+      <section id="s1" class="scene">
+        <div class="hero-img-wrap">
+          <img class="hero-img" src="assets/cover.png" crossorigin="anonymous" alt="" data-layout-allow-overflow />
+          <div class="hero-scrim"></div>
+        </div>
+        <div class="s1-content">
+          <div class="s1-kicker"><span class="dot"></span><span class="kicker">Fixed-weight YOLOv10n · Genesys 2 / Kintex-7</span></div>
+          <h1 id="s1-title">SILICON <span class="blue">YOLO</span></h1>
+          <div class="sub" id="s1-sub">What if an object detector <span class="amber">was the chip?</span></div>
+        </div>
+      </section>
+
+      <!-- ===== S2 — NMS-FREE (the pivot) ===== -->
+      <section id="s2" class="scene">
+        <div class="eyebrow" id="s2-eye">Why YOLOv10n</div>
+        <h1 class="statement" id="s2-title" style="font-size: 96px; margin-top: 24px;">
+          We deleted a <span class="blue">whole hardware block.</span>
+        </h1>
+        <div class="lead" id="s2-lead" style="margin-top: 26px;">
+          YOLOv10n is <span class="amber">NMS-free</span> — end-to-end. No sorting, no IoU loops,
+          no non-max-suppression unit to build in RTL.
+        </div>
+        <div class="nms-compare" id="s2-compare">
+          <div class="arch-card" id="card-v8">
+            <div class="name muted">YOLOv8n</div>
+            <div class="chain">
+              <span class="blk">Backbone</span><span class="arrow">→</span>
+              <span class="blk">Head</span><span class="arrow">→</span>
+              <span class="blk nms gone" id="nms-blk">NMS<span class="strike" id="nms-strike"></span></span>
+            </div>
+            <div class="tagline muted">needs a sequential NMS block</div>
+          </div>
+          <div class="vs">vs</div>
+          <div class="arch-card v10" id="card-v10">
+            <div class="name amber">YOLOv10n</div>
+            <div class="chain">
+              <span class="blk">Backbone</span><span class="arrow">→</span>
+              <span class="blk" style="border-color: rgba(255,178,62,0.45);">End-to-end head → boxes</span>
+            </div>
+            <div class="tagline amber">smaller · more accurate · NMS-free</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S3 — THE FLOW ===== -->
+      <section id="s3" class="scene">
+        <div class="eyebrow" id="s3-eye">The flow — no training</div>
+        <h1 id="s3-title" style="font-size: 72px; margin-top: 14px;">
+          Pretrained model <span class="blue">→</span> auto-generated <span class="amber">hardware contract.</span>
+        </h1>
+        <div class="flow" id="s3-flow">
+          <div class="step" id="st1"><div class="num">1</div><div class="st">Pretrained YOLOv10n</div><div class="sd">off-the-shelf COCO weights</div></div>
+          <div class="flow-arrow" id="fa1">→</div>
+          <div class="step" id="st2"><div class="num">2</div><div class="st">Prune-free PTQ</div><div class="sd">per-channel INT8, calibrated</div></div>
+          <div class="flow-arrow" id="fa2">→</div>
+          <div class="step" id="st3"><div class="num">3</div><div class="st">Freeze weights</div><div class="sd">canonical frozen artifact</div></div>
+          <div class="flow-arrow" id="fa3">→</div>
+          <div class="step amber-step" id="st4"><div class="num">4</div><div class="st">Hardware contract</div><div class="sd">hw_graph · .mem ROMs · golden vectors</div></div>
+          <div class="flow-arrow" id="fa4">→</div>
+          <div class="step amber-step" id="st5"><div class="num">5</div><div class="st">Cognichip RTL</div><div class="sd">weights baked into fabric</div></div>
+        </div>
+      </section>
+
+      <!-- ===== S4 — RESULTS ===== -->
+      <section id="s4" class="scene">
+        <div class="eyebrow" id="s4-eye">Results</div>
+        <h1 id="s4-title" style="font-size: 70px; margin-top: 14px;">Near-lossless INT8. <span class="blue">Zero DSPs.</span></h1>
+
+        <!-- panel A: accuracy -->
+        <div class="panel" id="s4-pa">
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="label">FP32 reference</div>
+              <div class="value"><span class="tnum" id="c-fp32">0.00</span></div>
+              <div class="note">YOLOv10n · COCO val2017 · mAP50-95</div>
+            </div>
+            <div class="metric">
+              <div class="label">INT8 quantized</div>
+              <div class="value blue"><span class="tnum" id="c-int8">0.00</span></div>
+              <div class="note amber">−0.32 pt · about lossless</div>
+              <div class="bar" id="bar-acc"><span></span></div>
+            </div>
+            <div class="metric">
+              <div class="label">vs YOLOv8n baseline</div>
+              <div class="value"><span class="amber">+</span><span class="tnum" id="c-delta">0.00</span></div>
+              <div class="note">37.62 INT8 &gt; 37.37 v8n FP32</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- panel B: hardware -->
+        <div class="panel" id="s4-pb">
+          <div class="eyebrow amber" style="margin-bottom: 22px;">Hardware · Cognichip-designed · Kintex-7 XC7K325T</div>
+          <div class="hw-grid">
+            <div class="hwm"><div class="v tnum"><span id="h-mac">0</span></div><div class="k">INT8 CSD MACs · constant-coefficient</div></div>
+            <div class="hwm zero"><div class="v tnum"><span id="h-dsp">0</span></div><div class="k">DSPs · weights are logic</div></div>
+            <div class="hwm"><div class="v tnum"><span id="h-lut">0</span><span class="unit">K LUT</span></div><div class="k">≈ 11.7% of fabric</div></div>
+            <div class="hwm"><div class="v tnum"><span id="h-bram">0</span></div><div class="k">BRAM · ≈ 57.5%</div></div>
+            <div class="hwm"><div class="v tnum"><span id="h-fps">0</span><span class="unit">FPS</span></div><div class="k">640×640 · folded SCE</div></div>
+            <div class="hwm"><div class="v tnum"><span id="h-pwr">0.0</span><span class="unit">W</span></div><div class="k">est. power</div></div>
+          </div>
+        </div>
+
+        <!-- panel C: verified -->
+        <div class="verified" id="s4-pc">
+          <div class="eyebrow blue">Correctness</div>
+          <div class="seal">✓ Bit-exact fixed-point golden vectors</div>
+          <div class="lead" style="text-align: center; max-width: 1040px;">INT8 weights · INT32 accumulate · per-layer requant — the RTL is locked to the frozen model.</div>
+        </div>
+      </section>
+
+      <!-- ===== S5 — WHY IT MATTERS ===== -->
+      <section id="s5" class="scene">
+        <div class="eyebrow" id="s5-eye">Why it matters</div>
+        <h1 class="statement" id="s5-title" style="font-size: 100px; margin-top: 24px;">
+          Milliwatt-class AI,<br /><span class="amber">on the device.</span>
+        </h1>
+        <div class="lead" id="s5-lead" style="margin-top: 28px;">
+          No cloud. No weight DRAM. No NMS block. Inference is private by construction — and FPGA-proven.
+        </div>
+        <div class="why-row" id="s5-chips" style="margin-top: 40px;">
+          <div class="why-chip">Drones</div>
+          <div class="why-chip">Cameras</div>
+          <div class="why-chip">Robotics</div>
+          <div class="why-chip">Wearables</div>
+          <div class="why-chip blue" style="border-color: rgba(59,169,255,0.5); color:#eaf2ff;">Path to tapeout →</div>
+        </div>
+      </section>
+
+      <!-- ===== S6 — CLOSE ===== -->
+      <section id="s6" class="scene">
+        <div class="closer" id="s6-line">
+          A pretrained detector,<br /><span class="blue">baked into silicon.</span>
+        </div>
+        <div class="endcard" id="s6-endcard">
+          Weights as silicon.<span class="sep">·</span><span class="amber">Zero DSPs.</span><span class="sep">·</span>~51 FPS.<span class="sep">·</span>~3.2 W.
+        </div>
+        <div class="credits" id="s6-credits">
+          <span class="blue">Silicon YOLO</span> · YOLOv10n · <span class="amber">Cognichip</span> · Genesys 2 / Kintex-7
+        </div>
+      </section>
+
+      <!-- ===== caption rail ===== -->
+      <div id="caption-wrap"><div id="caption"></div></div>
+
+      <!-- ===== blackout ===== -->
+      <div id="blackout"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const D = 90;
+
+      /* ---------- background ambient (seekable, finite repeats) ---------- */
+      tl.to("#glow-blue", { scale: 1.16, opacity: 0.5, duration: 7, ease: "sine.inOut",
+        yoyo: true, repeat: Math.floor(D / 7) - 1 }, 0);
+      tl.to("#glow-amber", { scale: 1.2, opacity: 0.42, duration: 9, ease: "sine.inOut",
+        yoyo: true, repeat: Math.floor(D / 9) - 1 }, 0);
+      tl.to("#grid", { x: -64, duration: D, ease: "none" }, 0);
+
+      /* ---------- open / close blackout ---------- */
+      tl.to("#blackout", { opacity: 0, duration: 1.0, ease: "power2.out" }, 0.2);
+      tl.to("#blackout", { opacity: 1, duration: 0.9, ease: "power2.in" }, D - 0.9);
+
+      /* ---------- scene crossfades ---------- */
+      const scenes = [
+        ["#s1", 0, 12], ["#s2", 12, 32], ["#s3", 32, 48],
+        ["#s4", 48, 74], ["#s5", 74, 84], ["#s6", 84, 90],
+      ];
+      scenes.forEach(([sel, start, end], i) => {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" },
+          start === 0 ? 0.3 : start);
+        if (i < scenes.length - 1) {
+          tl.to(sel, { opacity: 0, duration: 0.6, ease: "power2.in" }, end - 0.25);
+        }
+      });
+
+      /* ---------- captions ---------- */
+      const cap = document.querySelector("#caption");
+      const lines = [
+        [1.4, 10.8, "A pretrained object detector, baked into a chip."],
+        [13.0, 30.5, "YOLOv10n is NMS-free — an entire hardware block, gone."],
+        [33.0, 46.5, "Pretrained → quantize → freeze → hardware contract."],
+        [49.0, 72.5, "Near-lossless INT8. Zero DSPs. Bit-exact verified."],
+        [75.0, 82.5, "Private, milliwatt-class AI at the edge."],
+      ];
+      lines.forEach(([a, b, t]) => {
+        tl.set(cap, { innerText: t }, a);
+        tl.fromTo(cap, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", overwrite: "auto" }, a);
+        tl.to(cap, { opacity: 0, y: -10, duration: 0.4, ease: "power2.in", overwrite: "auto" }, b);
+      });
+
+      /* ================= S1 ================= */
+      tl.fromTo(".hero-img-wrap", { opacity: 0 }, { opacity: 1, duration: 1.4, ease: "power2.out" }, 0.3);
+      tl.fromTo(".hero-img", { scale: 1.0 }, { scale: 1.09, duration: 12, ease: "none" }, 0.3);
+      tl.fromTo("#s1 .s1-kicker", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 1.2);
+      tl.fromTo("#s1-title", { opacity: 0, y: 70, filter: "blur(14px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }, 1.5);
+      tl.fromTo("#s1-sub", { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 2.2);
+
+      /* ================= S2 ================= */
+      tl.fromTo("#s2-eye", { opacity: 0, letterSpacing: "0.6em" }, { opacity: 1, letterSpacing: "0.3em", duration: 0.7, ease: "power2.out" }, 12.3);
+      tl.fromTo("#s2-title", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out" }, 12.6);
+      tl.fromTo("#s2-lead", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 13.6);
+      tl.fromTo("#card-v8", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 14.6);
+      tl.fromTo("#card-v10", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 15.2);
+      // strike through the NMS block, then fade it out
+      tl.fromTo("#nms-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, 17.6);
+      tl.to("#nms-blk", { opacity: 0.35, duration: 0.5, ease: "power2.out" }, 18.2);
+
+      /* ================= S3 ================= */
+      tl.fromTo("#s3-eye", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 32.3);
+      tl.fromTo("#s3-title", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, 32.6);
+      const steps = ["#st1", "#st2", "#st3", "#st4", "#st5"];
+      const arrows = ["#fa1", "#fa2", "#fa3", "#fa4"];
+      steps.forEach((s, i) => {
+        tl.fromTo(s, { opacity: 0, y: 36, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 33.6 + i * 0.7);
+        if (i < arrows.length) {
+          tl.fromTo(arrows[i], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 33.95 + i * 0.7);
+        }
+      });
+
+      /* ================= S4 — results (3 internal panels) ================= */
+      tl.fromTo("#s4-eye", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 48.3);
+      tl.fromTo("#s4-title", { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, 48.5);
+
+      // panel A visible 49.4 - 57.6
+      tl.set("#s4-pa", { opacity: 1 }, 0);
+      tl.fromTo("#s4-pa .metric", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.14 }, 49.4);
+      const fp32 = { v: 0 };
+      tl.to(fp32, { v: 37.94, duration: 1.4, ease: "power2.out",
+        onUpdate: () => (document.querySelector("#c-fp32").textContent = fp32.v.toFixed(2)) }, 49.8);
+      const int8 = { v: 0 };
+      tl.to(int8, { v: 37.62, duration: 1.4, ease: "power2.out",
+        onUpdate: () => (document.querySelector("#c-int8").textContent = int8.v.toFixed(2)) }, 50.2);
+      const delta = { v: 0 };
+      tl.to(delta, { v: 0.25, duration: 1.4, ease: "power2.out",
+        onUpdate: () => (document.querySelector("#c-delta").textContent = delta.v.toFixed(2)) }, 50.6);
+      tl.fromTo("#bar-acc > span", { width: "0%" }, { width: "99.2%", duration: 1.3, ease: "power2.out" }, 50.4);
+      tl.to("#s4-pa", { opacity: 0, duration: 0.5, ease: "power2.in" }, 57.4);
+
+      // panel B visible 57.8 - 69.4
+      tl.set("#s4-pb", { opacity: 0 }, 0);
+      tl.fromTo("#s4-pb", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 57.8);
+      tl.fromTo("#s4-pb .hwm", { opacity: 0, y: 34, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.3)", stagger: 0.1 }, 58.0);
+      const hw = [
+        ["#h-mac", 1024, 0], ["#h-dsp", 0, 0], ["#h-lut", 38, 0],
+        ["#h-bram", 483, 0], ["#h-fps", 51, 0], ["#h-pwr", 3.2, 1],
+      ];
+      hw.forEach(([sel, val, dec], idx) => {
+        const o = { v: 0 };
+        tl.to(o, { v: val, duration: 1.2, ease: "power2.out",
+          onUpdate: () => (document.querySelector(sel).textContent = o.v.toFixed(dec)) }, 58.4 + idx * 0.1);
+      });
+      tl.to("#s4-pb", { opacity: 0, duration: 0.5, ease: "power2.in" }, 69.2);
+
+      // panel C visible 69.6 - 73.7
+      tl.set("#s4-pc", { opacity: 0 }, 0);
+      tl.set("#s4-pc", { opacity: 1 }, 69.6);
+      tl.fromTo("#s4-pc .eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 69.7);
+      tl.fromTo("#s4-pc .seal", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.6)" }, 69.9);
+      tl.fromTo("#s4-pc .lead", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 70.4);
+
+      /* ================= S5 ================= */
+      tl.fromTo("#s5-eye", { opacity: 0, letterSpacing: "0.55em" }, { opacity: 1, letterSpacing: "0.3em", duration: 0.6, ease: "power2.out" }, 74.3);
+      tl.fromTo("#s5-title", { opacity: 0, y: 54 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out" }, 74.6);
+      tl.fromTo("#s5-lead", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 75.4);
+      tl.fromTo("#s5-chips .why-chip", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.1 }, 76.0);
+
+      /* ================= S6 ================= */
+      tl.fromTo("#s6-line", { opacity: 0, y: 44, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }, 84.4);
+      tl.fromTo("#s6-endcard", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 85.3);
+      tl.fromTo("#s6-credits", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 86.0);
+
+      window.__timelines["root"] = tl;
+    </script>
+  </body>
+</html>

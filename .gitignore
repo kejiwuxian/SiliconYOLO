@@ -66,3 +66,11 @@ command_results/
 _closewin.ps1
 _enumwin.ps1
 rtl/test_write.sv
+
+# --- video render scratch ---
+video/renders/work-*/
+video/render.log
+video/node_modules/
+
+# --- copied HyperFrames skills (local tooling) ---
+.claude/skills/
