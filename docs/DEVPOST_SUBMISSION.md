@@ -112,8 +112,8 @@ touch beats a weaker one you spend a week pruning.
 
 **Track B — chip design (Cognichip ACI, hardware):**
 - Spec capture → micro-architecture → PPA estimation → RTL. A naive 16-PE design
-  only reached **~2.8 FPS**, which drove the move to the 288-PE coarse-grained
-  pipeline above. *(Per sponsor guidelines we keep the EDA tool's internals
+  only reached **~2.8 FPS**, which drove the move to the **folded 1024-MAC CSD
+  pipeline** above. *(Per sponsor guidelines we keep the EDA tool's internals
   confidential and describe only our design problem and deliverables.)*
 
 **The contract between them:** Track B is **gated** — it cannot emit
@@ -137,11 +137,11 @@ multi-hour GPU runs, and recovered the build whenever it broke.
   cached OAuth login that was shadowing the new token.
 
 ## Accomplishments we're proud of
-- **Real, measured compression** (not theoretical): −16% params / −14.5% FLOPs
-  with monotonic accuracy recovery, fully committed to git with reproducible
-  reports.
+- **Near-lossless INT8 quantization** (not theoretical): YOLOv10n FP32 **37.94** →
+  INT8 PTQ **37.62 mAP** (**−0.32 pt**) — reached after a hard-won pivot away from a
+  YOLOv8-n prune-and-retrain track, all committed to git with reproducible reports.
 - **A genuinely multiplier-less, DSP-free accelerator architecture** sized to fit
-  a real board (40% of a Kintex-7) at ~45 FPS.
+  a real board (~12% of a Kintex-7) at ~51 FPS.
 - **A working SW↔HW handoff contract** between two independent AI agents — and the
   discipline to *gate* the hardware track until the software was ready.
 - **A grounded cost case for fixed-weight silicon:** ~0.2 W / ~$2 per chip at volume,
@@ -192,13 +192,14 @@ multi-hour GPU runs, and recovered the build whenever it broke.
 - **Creativity:** weights-as-circuit (no DSP MACs) *plus* the meta-move of two AI
   agents co-designing HW+SW under an enforced contract.
 - **Technical complexity:** dependency-graph structured pruning, custom trainer,
-  INT8 PTQ with per-channel scales, CSD multiplier-less arithmetic, a coarse-grained
-  folded pipeline, RTL + golden verification, full FPGA toolflow.
+  INT8 PTQ with per-channel scales, CSD multiplier-less arithmetic, a folded
+  1024-MAC pipeline, RTL + golden verification, full FPGA toolflow.
 - **Ethical considerations:** ~100× lower energy than cloud inference; on-device =
   privacy by default; we acknowledge object detection's dual-use (surveillance) and
   keep the methodology open. Fixed-function silicon also democratizes custom edge AI.
 - **Brainstorming / process:** documented decision points — BN-γ→L1, trainer fix,
-  worker tuning, time-boxed proof before the long run — i.e., iterative, evidence-driven.
+  worker tuning, and ultimately the **pivot from pruning YOLOv8-n to a pretrained
+  YOLOv10n → PTQ → freeze flow** — i.e., iterative, evidence-driven.
 
 ---
 
@@ -206,11 +207,11 @@ multi-hour GPU runs, and recovered the build whenever it broke.
 1. **00:00–00:25 Hook:** "What if a neural network *was* the chip?" Show the
    concept: weights frozen into multiplier-less logic.
 2. **00:25–01:10 The build, live:** screen of Sai orchestrating two agents in
-   parallel — Claude Code pruning/quantizing on the left of the story, Cognichip
+   parallel — Claude Code quantizing the pretrained model on the left of the story, Cognichip
    ACI doing the chip on the right — with the **handoff contract** called out.
-3. **01:10–02:00 Results:** the compression numbers (−16% / −14.5%, monotonic
-   recovery), then the HW PPA (288 PEs, 0 DSP target, ~130K LUTs / 40%, ~45 FPS,
-   ~2.5 W), and the golden-vector verification flow.
+3. **01:10–02:00 Results:** the near-lossless INT8 numbers (37.94 → 37.62 mAP),
+   then the HW PPA (1024 CSD MACs, 0 DSPs, ~38K LUTs / 11.7%, ~51 FPS, ~3.2 W on
+   FPGA / ~0.2 W as a 28 nm ASIC), and the golden-vector verification flow.
 4. **02:00–02:40 Why it matters:** edge AI energy + privacy; path from FPGA to
    tapeout.
 5. **02:40–03:00 Close:** "Two AI agents designed AI silicon — and we kept them
@@ -219,7 +220,7 @@ multi-hour GPU runs, and recovered the build whenever it broke.
 ## Draft social post (required for the Simular track)
 > We built **Silicon YOLO** at @CalHacks AI Hackathon 2026 🧠⚡
 > A YOLOv10n object detector *baked into a chip* — weights become multiplier-less
-> logic, ~45 FPS on a Kintex-7, milliwatt-class.
+> logic, ~51 FPS on a Kintex-7, milliwatt-class.
 > The wild part: we ran TWO AI agents in parallel — @Simular Sai orchestrated the
 > whole build and enforced the software↔hardware handoff. AI designing AI silicon.
 > #CalHacks #Simular
