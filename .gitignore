@@ -21,8 +21,9 @@ yolov10n.pt
 yolo11n.pt
 *.cache
 
-# --- Large golden tensor dumps (regenerable via golden/gen_golden.py) ---
+# --- Large golden tensor dumps (regenerable via golden/gen_golden*.py) ---
 golden/vectors/
+golden/float_ref/vectors/
 
 # --- Vivado / Xilinx build outputs ---
 *.jou
@@ -59,3 +60,9 @@ Thumbs.db
 cc.cmd
 cc.ps1
 .cc_run.ps1
+
+# --- harness scratch ---
+command_results/
+_closewin.ps1
+_enumwin.ps1
+rtl/test_write.sv

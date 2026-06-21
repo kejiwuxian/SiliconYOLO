@@ -1,0 +1,18 @@
+{
+  "tag": "int8_full",
+  "weights": "model\\yolov10n.pt",
+  "precision": "int8_weight+activation_fakequant",
+  "weight_int8_layers": 83,
+  "weight_int4_layers": 0,
+  "activation_quant_hooks": 83,
+  "imgsz": 640,
+  "metric": "pycocotools (ultralytics validator)",
+  "mAP50_95": 0.35298,
+  "mAP50": 0.50547,
+  "reference": {
+    "fp32_mAP50_95": 0.37935,
+    "weight_only_int8_mAP50_95": 0.37623
+  },
+  "generated_utc": "2026-06-21T07:54:21Z",
+  "elapsed_sec": 47.8
+}
