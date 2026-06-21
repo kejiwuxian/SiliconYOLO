@@ -104,11 +104,11 @@ today's edge options it wins decisively on energy and lifetime cost:
 > reaches **up to ~800 MHz → ~200 FPS**. Throughput and power both scale ~linearly with clock,
 > so efficiency stays ~constant at **~255 FPS/W** — run **~800 MHz / ~200 FPS / ~0.8 W** for
 > max throughput, or **~200 MHz / ~51 FPS / ~0.2 W** milliwatt-class for battery/always-on.
-> The cost table below uses the **low-power point** (the headline product mode).
+> The cost table below lists **both operating points**; the **$ / energy / TCO figures** use the low-power point (the headline product mode).
 
 | Platform | Type | Power | FPS @640 INT8 | mAP50-95 | Unit cost (@100k) | NRE |
 |---|---|---|---|---|---|---|
-| Silicon YOLO ASIC (28nm est.) | Fixed-weight ASIC | 200 mW | 51 | 37.6 | $2 | $2.5M |
+| Silicon YOLO ASIC (28nm est.) | Fixed-weight ASIC | 200 mW @200 MHz<br>~800 mW @800 MHz | 51 @200 MHz<br>~200 @800 MHz | 37.6 | $2 | $2.5M |
 | Jetson Orin Nano Super | Edge GPU SoC | 15 W | 150 | 37.3 | $249 | -- |
 | Hailo-8 (accel+host) | NN accelerator | 2 W | 100 | 37.0 | $200 | -- |
 | Coral Edge TPU (dev board) | NN accelerator | 2 W | 35 | 36.0 | $130 | -- |

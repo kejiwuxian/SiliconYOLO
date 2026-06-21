@@ -56,7 +56,7 @@ no external DRAM**. That has three compounding effects when moved from FPGA fabr
 
 | Platform | Type | Power | FPS @640 INT8 | mAP50-95 | Unit cost (@100k) | NRE |
 |---|---|---|---|---|---|---|
-| Silicon YOLO ASIC (28nm est.) | Fixed-weight ASIC | 200 mW | 51 | 37.6 | $2 | $2.5M |
+| Silicon YOLO ASIC (28nm est.) | Fixed-weight ASIC | 200 mW @200 MHz<br>~800 mW @800 MHz | 51 @200 MHz<br>~200 @800 MHz | 37.6 | $2 | $2.5M |
 | Jetson Orin Nano Super | Edge GPU SoC | 15 W | 150 | 37.3 | $249 | -- |
 | Hailo-8 (accel+host) | NN accelerator | 2 W | 100 | 37.0 | $200 | -- |
 | Coral Edge TPU (dev board) | NN accelerator | 2 W | 35 | 36.0 | $130 | -- |
