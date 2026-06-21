@@ -12,7 +12,7 @@ doesn't need a general MAC array, a weight bus, or off-chip memory.
 
 | 🎯 Target | ⚡ Throughput | 🔌 Power | 🧮 DSPs | 📦 LUTs | 🎓 Accuracy |
 |---|---|---|---|---|---|
-| Kintex-7 XC7K325T | **~51 FPS** @200 MHz (FPGA) · **~200 FPS** @~800 MHz (ASIC) | **~3.2 W** FPGA · **~0.2 W** ASIC | **0** | ~38K (11.7%) | **37.62** mAP50-95 |
+| Kintex-7 XC7K325T | **~51 FPS** @200 MHz (FPGA)<br>**~200 FPS** @~800 MHz (ASIC) | **~3.2 W** FPGA<br>**~0.2 W** ASIC | **0** | ~38K (11.7%) | **37.62** mAP50-95 |
 
 ---
 
