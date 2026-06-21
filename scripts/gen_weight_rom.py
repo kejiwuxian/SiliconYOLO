@@ -1,0 +1,184 @@
+#!/usr/bin/env python3
+"""
+gen_weight_rom.py  —  Concatenate per-layer .mem files into unified ROMs
+==========================================================================
+Reads hw_graph.json, iterates all Conv2D layers in order, reads each layer's
+weight and bias .mem file, and writes two output files:
+
+  hwconst/mem/weights_all.mem  — all INT8 weights concatenated (hex, 1 byte/line)
+  hwconst/mem/biases_all.mem   — all INT32 biases concatenated (hex, 4 bytes/line)
+  hwconst/mem/silu_lut.mem     — 256-entry SiLU INT8 LUT (hex, 1 byte/line)
+
+Also writes:
+  rtl/gen/weight_offsets_pkg.sv — auto-generated SV localparam offsets
+    (currently all offsets are baked into yolov10n_pkg.sv via the PowerShell
+     computation; this script provides a cross-check / regeneration path)
+
+Usage:
+  cd D:\\Projects\\FPGA\\SiliconYOLO
+  python scripts/gen_weight_rom.py
+
+Requirements: Python >= 3.8, no external dependencies.
+"""
+
+import json
+import math
+import os
+import struct
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def load_graph():
+    graph_path = os.path.join(ROOT, "hwgraph", "hw_graph.json")
+    with open(graph_path) as f:
+        return json.load(f)
+
+
+def read_mem_file(path):
+    """Read a .mem file (one hex value per line) and return list of int."""
+    abs_path = os.path.join(ROOT, path)
+    if not os.path.exists(abs_path):
+        raise FileNotFoundError(f"Missing .mem file: {abs_path}")
+    values = []
+    with open(abs_path) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("//"):
+                values.append(int(line, 16))
+    return values
+
+
+def twos_complement(value, bits):
+    """Convert unsigned value to two's-complement signed int."""
+    if value >= (1 << (bits - 1)):
+        value -= (1 << bits)
+    return value
+
+
+def gen_silu_lut(out_path):
+    """Pre-compute SiLU LUT: addr=uint8(x) -> int8(silu(x/scale)) for scale=1/127."""
+    import math
+    scale = 1.0 / 127.0
+    lut = []
+    for i in range(256):
+        x_int = i if i < 128 else i - 256   # reinterpret as signed
+        x_fp = x_int * scale
+        sig = 1.0 / (1.0 + math.exp(-x_fp))
+        y_fp = x_fp * sig
+        y_int = int(round(y_fp / scale))
+        y_int = max(-127, min(127, y_int))
+        # Store as unsigned 8-bit for $readmemh (two's complement for negative)
+        y_uint = y_int & 0xFF
+        lut.append(y_uint)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    with open(out_path, "w") as f:
+        for v in lut:
+            f.write(f"{v:02x}\n")
+    print(f"  Written SiLU LUT: {out_path} ({len(lut)} entries)")
+
+
+def concat_weight_files(graph, out_w_path, out_b_path):
+    """Concatenate per-layer weight and bias .mem files."""
+    all_weights = []
+    all_biases  = []
+    w_offsets   = []
+    b_offsets   = []
+
+    for layer in graph["layers"]:
+        if layer.get("op") != "Conv2D":
+            continue
+
+        lid  = layer["id"]
+        name = layer["name"]
+        wfile = layer.get("weight_mem_file")
+        bfile = layer.get("bias_mem_file")
+
+        # Weight offset
+        w_offsets.append((lid, name, len(all_weights)))
+
+        if wfile:
+            try:
+                wvals = read_mem_file(wfile)
+                all_weights.extend(wvals)
+            except FileNotFoundError as e:
+                print(f"  WARNING: {e} — padding with zeros")
+                # Compute expected size from layer geometry
+                c_out = layer["c_out"]
+                c_in  = layer["c_in"]
+                k     = layer["kernel"]
+                dw    = layer.get("depthwise", False)
+                wsize = c_out * (k * k) if dw else c_out * c_in * (k * k)
+                all_weights.extend([0] * wsize)
+
+        # Bias offset
+        b_offsets.append((lid, name, len(all_biases)))
+
+        if bfile:
+            try:
+                bvals = read_mem_file(bfile)
+                all_biases.extend(bvals)
+            except FileNotFoundError as e:
+                print(f"  WARNING: {e} — padding with zeros")
+                all_biases.extend([0] * layer["c_out"])
+
+    # Write concatenated weight file (8-bit per line)
+    os.makedirs(os.path.dirname(out_w_path), exist_ok=True)
+    with open(out_w_path, "w") as f:
+        for v in all_weights:
+            f.write(f"{v & 0xFF:02x}\n")
+    print(f"  Written weights: {out_w_path} ({len(all_weights)} bytes)")
+
+    # Write concatenated bias file (32-bit per line, 4 hex bytes)
+    with open(out_b_path, "w") as f:
+        for v in all_biases:
+            f.write(f"{v & 0xFFFFFFFF:08x}\n")
+    print(f"  Written biases:  {out_b_path} ({len(all_biases)} INT32s)")
+
+    return w_offsets, b_offsets, all_weights, all_biases
+
+
+def gen_offset_pkg(w_offsets, b_offsets, out_sv_path):
+    """Generate SV package with weight/bias offsets (cross-check vs baked values)."""
+    os.makedirs(os.path.dirname(out_sv_path), exist_ok=True)
+    with open(out_sv_path, "w") as f:
+        f.write("// AUTO-GENERATED by scripts/gen_weight_rom.py — do not edit\n")
+        f.write("package weight_offsets_pkg;\n\n")
+        f.write("  // Weight byte offsets per Conv2D layer\n")
+        for lid, name, off in w_offsets:
+            safe = name.replace(".", "_")
+            f.write(f"  localparam int W_OFF_{lid:03d}_{safe} = {off};\n")
+        f.write("\n  // Bias INT32 offsets per Conv2D layer\n")
+        for lid, name, off in b_offsets:
+            safe = name.replace(".", "_")
+            f.write(f"  localparam int B_OFF_{lid:03d}_{safe} = {off};\n")
+        f.write("\nendpackage : weight_offsets_pkg\n")
+    print(f"  Written offset pkg: {out_sv_path}")
+
+
+def main():
+    print("gen_weight_rom.py — YOLOv10n weight ROM generation")
+    print(f"  Root: {ROOT}")
+
+    graph = load_graph()
+
+    out_w   = os.path.join(ROOT, "hwconst", "mem", "weights_all.mem")
+    out_b   = os.path.join(ROOT, "hwconst", "mem", "biases_all.mem")
+    out_lut = os.path.join(ROOT, "hwconst", "mem", "silu_lut.mem")
+    out_sv  = os.path.join(ROOT, "rtl", "gen", "weight_offsets_pkg.sv")
+
+    print("\n[1/3] Generating SiLU LUT ...")
+    gen_silu_lut(out_lut)
+
+    print("\n[2/3] Concatenating weight/bias .mem files ...")
+    w_offsets, b_offsets, wvals, bvals = concat_weight_files(graph, out_w, out_b)
+
+    print("\n[3/3] Writing SV offset package ...")
+    gen_offset_pkg(w_offsets, b_offsets, out_sv)
+
+    print(f"\nDone.  Total weights: {len(wvals):,} bytes | biases: {len(bvals):,} INT32s")
+    print("Run simulation with:  xvlog -sv rtl/*.sv && xelab yolov10n_accel_top")
+
+
+if __name__ == "__main__":
+    main()

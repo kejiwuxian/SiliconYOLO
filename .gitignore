@@ -80,3 +80,6 @@ rtl_tb/sim_out/*.vvp
 rtl_tb/sim_out/*.log
 rtl_tb/golden_hex/*/*.hex
 rtl_tb/sim_out/yolov10n_accel.vcd
+
+# --- Claude Code local state (skills, locks, settings) ---
+.claude/

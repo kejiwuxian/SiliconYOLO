@@ -1,0 +1,14 @@
+yolov10n_accel:
+  deps:
+    - rtl/yolov10n_pkg.sv
+    - rtl/csd_mac_slice.sv
+    - rtl/sce_mac_array.sv
+    - rtl/weight_rom_bank.sv
+    - rtl/fm_pingpong_buf.sv
+    - rtl/silu_lut_rom.sv
+    - rtl/requant_unit.sv
+    - rtl/layer_scheduler.sv
+    - rtl/input_preprocessor.sv
+    - rtl/axi4l_csr.sv
+    - rtl/yolov10n_accel_top.sv
+  top: yolov10n_accel_top
