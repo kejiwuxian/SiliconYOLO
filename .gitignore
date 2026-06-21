@@ -1,0 +1,61 @@
+# --- Python / venv ---
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+
+# --- Datasets (never track; reuse genesys2's COCO) ---
+datasets/
+*.zip
+*.tar
+*.tar.gz
+
+# --- Pretrained checkpoint caches (re-downloadable from ultralytics) ---
+# We TRACK the frozen, quantized artifacts under model/frozen/ and hwconst/,
+# but NOT the raw upstream .pt caches.
+*.pt
+!model/frozen/*.pt
+yolov10n.pt
+yolo11n.pt
+*.cache
+
+# --- Large golden tensor dumps (regenerable via golden/gen_golden.py) ---
+golden/vectors/
+
+# --- Vivado / Xilinx build outputs ---
+*.jou
+*.log
+!*_run.log
+.Xil/
+vivado*/
+*.bit
+*.bin
+*.ltx
+*.dcp
+.srcs/
+.runs/
+.cache/
+.hw/
+.sim/
+
+# --- Node / TokenRouter harness scaffolding ---
+node_modules/
+package.json
+package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.agents/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- TokenRouter / harness task files ---
+.cc_task*.md
+.cc_out.log
+cc.cmd
+cc.ps1
+.cc_run.ps1
