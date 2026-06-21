@@ -4,7 +4,7 @@
 > **Scope:** This compares the **taped-out fixed-weight ASIC** (the real "weights baked into
 > silicon" product) against off-the-shelf hardware running the *same* detection task —
 > YOLOv10n-class, 640×640, INT8, ~37 mAP50-95. The Genesys 2 / Kintex-7 FPGA is **only the
-> functional prototype** used to prove the RTL; it is *not* the product and is excluded here.
+> functional prototype** used to prove the RTL; it is *not* the product (shown only as the **FPGA reference** in the first row); all cost, energy, and TCO figures are **ASIC-only**.
 > All ASIC figures are **engineering estimates** with assumptions stated at the bottom.
 
 ---
@@ -56,7 +56,7 @@ no external DRAM**. That has three compounding effects when moved from FPGA fabr
 
 | Platform | Type | Power | FPS @640 INT8 | mAP50-95 | Unit cost (@100k) | NRE |
 |---|---|---|---|---|---|---|
-| Silicon YOLO ASIC (28nm est.) | Fixed-weight ASIC | 200 mW @200 MHz<br>~800 mW @800 MHz | 51 @200 MHz<br>~200 @800 MHz | 37.6 | $2 | $2.5M |
+| Silicon YOLO ASIC (28nm est.) | Fixed-weight ASIC | ~3.2 W (FPGA)<br>~0.2 W (ASIC) | 51 (FPGA)<br>51 (ASIC) | 37.6 | $2 | $2.5M |
 | Jetson Orin Nano Super | Edge GPU SoC | 15 W | 150 | 37.3 | $249 | -- |
 | Hailo-8 (accel+host) | NN accelerator | 2 W | 100 | 37.0 | $200 | -- |
 | Coral Edge TPU (dev board) | NN accelerator | 2 W | 35 | 36.0 | $130 | -- |
