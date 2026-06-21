@@ -11,6 +11,18 @@ honest about what runs in open-source tools vs what needs Vivado.
 
 ---
 
+## Gallery
+
+**INT8 fixed-point detection demo** (bit-exact to RTL):
+
+![Detection demo](../docs/showcase/silicon_yolo_sim_detections.gif)
+
+| CSD MAC slice | 1024-MAC SCE array | INT8 stem activations |
+|---|---|---|
+| ![mac slice](../docs/showcase/sim_waveform_csd_mac_slice.png) | ![mac array](../docs/showcase/sim_waveform_sce_mac_array.png) | ![activations](../docs/showcase/sim_layer_activations.png) |
+
+Per-frame detections: [00](../docs/showcase/silicon_yolo_sim_det_00.png) · [01](../docs/showcase/silicon_yolo_sim_det_01.png) · [02](../docs/showcase/silicon_yolo_sim_det_02.png) · [03](../docs/showcase/silicon_yolo_sim_det_03.png) · [04](../docs/showcase/silicon_yolo_sim_det_04.png) · [05](../docs/showcase/silicon_yolo_sim_det_05.png)
+
 ## TL;DR — what actually runs
 
 | Piece | Simulator | Status |

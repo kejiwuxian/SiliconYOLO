@@ -10,6 +10,24 @@ handoff** — no training. We use the official Ultralytics **YOLOv10n** COCO
 checkpoint (NMS-free → no NMS RTL block), quantize it to INT8, freeze the
 weights, and emit the artifacts the Cognichip RTL track needs.
 
+## 📸 Graphic demonstration
+
+**INT8 fixed-point object detection** — numerically bit-exact to the RTL datapath, run over COCO val images:
+
+![INT8 fixed-point detection demo](docs/showcase/silicon_yolo_sim_detections.gif)
+
+**Real RTL simulation waveforms** (Icarus Verilog, self-checking, bit-exact to the golden vectors):
+
+| CSD MAC slice — INT8 dot-product (`−8204` matches integer reference) | 1024-wide SCE MAC array — conv-tile reduction |
+|---|---|
+| ![CSD MAC slice waveform](docs/showcase/sim_waveform_csd_mac_slice.png) | ![SCE MAC array waveform](docs/showcase/sim_waveform_sce_mac_array.png) |
+
+INT8 stem feature maps (activation snapshot):
+
+![INT8 stem activations](docs/showcase/sim_layer_activations.png)
+
+> Full simulation writeup, pass/fail status, and reproduce steps: [`rtl_tb/SIM_SHOWCASE.md`](rtl_tb/SIM_SHOWCASE.md)
+
 ## Pipeline (model → silicon handoff)
 
 ```
