@@ -206,6 +206,7 @@ See `docs/IMPLEMENTATION_PLAN.md` for the single source of truth.
 | 📸 Graphic demo (GIF + waveforms) | [`docs/showcase/`](docs/showcase) |
 | 🎬 Demo video (narrated, 180 s) | [`video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4`](video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4) |
 | 🎙️ Narration script | [`video/VIDEO_SCRIPT.md`](video/VIDEO_SCRIPT.md) |
+| 🖼️ Pitch deck (PPTX) | [`docs/SiliconYOLO_pitch.pptx`](docs/SiliconYOLO_pitch.pptx) |
 | 📝 Devpost write-up | [`docs/DEVPOST_SUBMISSION.md`](docs/DEVPOST_SUBMISSION.md) |
 | 💸 Cost & efficiency analysis | [`docs/COST_COMPARISON.md`](docs/COST_COMPARISON.md) |
 | 🧪 Simulation showcase | [`rtl_tb/SIM_SHOWCASE.md`](rtl_tb/SIM_SHOWCASE.md) |
