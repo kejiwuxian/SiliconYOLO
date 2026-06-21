@@ -1,4 +1,4 @@
-# Prior Attempt — genesys2 / YOLOv8-n (prune + retrain track)
+# 🕯️ Prior Attempt — genesys2 / YOLOv8-n (prune + retrain track)
 
 > **Status:** COMPLETE & SUPERSEDED. This documents the original software track
 > (project \`D:\Projects\FPGA\genesys2\`) that preceded the current SiliconYOLO /
@@ -86,3 +86,8 @@ floor-beating, hardware-ready model far faster and cleaner.
 - Git tip: \`b39ea8f A3 production (2h time-boxed) complete + weights frozen\`
 
 *This attempt is preserved as the baseline we improved upon — not the shipping model.*
+
+---
+
+### 📂 Project materials
+[🔬 README](../README.md) · [📝 Devpost](DEVPOST_SUBMISSION.md) · [💸 Cost analysis](COST_COMPARISON.md) · [🧪 Sim showcase](../rtl_tb/SIM_SHOWCASE.md) · [🕯️ Prior attempt](PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_with_cost.mp4)

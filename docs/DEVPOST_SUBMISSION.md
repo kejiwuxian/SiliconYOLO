@@ -1,4 +1,4 @@
-# Devpost Submission — DRAFT
+# 📝 Devpost Submission — DRAFT
 **UC Berkeley AI Hackathon 2026 (Cal Hacks)** · Devpost: ai-hackathon-2026.devpost.com
 
 ---
@@ -243,3 +243,8 @@ multi-hour GPU runs, and recovered the build whenever it broke.
 > disclose product/platform/interface specifics. This draft therefore describes
 > only *our design problem, methodology, and deliverables* — not the tool's
 > internals. Review before publishing.
+
+---
+
+### 📂 Project materials
+[🔬 README](../README.md) · [📝 Devpost](DEVPOST_SUBMISSION.md) · [💸 Cost analysis](COST_COMPARISON.md) · [🧪 Sim showcase](../rtl_tb/SIM_SHOWCASE.md) · [🕯️ Prior attempt](PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_with_cost.mp4)

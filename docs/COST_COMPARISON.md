@@ -1,4 +1,4 @@
-# Silicon YOLO — Cost & Efficiency Comparison
+# 💸 Silicon YOLO — Cost & Efficiency Comparison
 ### Taped-out fixed-weight ASIC vs. traditional hardware
 
 > **Scope:** This compares the **taped-out fixed-weight ASIC** (the real "weights baked into
@@ -19,6 +19,8 @@
 | **Unit cost @100k vol** | ~$2 | Pi 5 $80 / Coral $130 | **40–150× cheaper silicon** |
 | **3-yr fleet TCO (100k, 24/7)** | ~$2.78 M | Pi 5 $10.8 M | **~4–27× lower** |
 | **Accuracy (mAP)** | 37.6 | 36–37.4 | **≈ equal** (same frozen weights) |
+
+![ASIC vs edge hardware — power, energy, cost, TCO](showcase/silicon_yolo_asic_cost_comparison.png)
 
 The ASIC trades **flexibility** (one model, hard-wired) for a **decisive win on power, energy,
 unit cost, and total cost of ownership at volume**.
@@ -147,4 +149,9 @@ differentiator is power, cost, and determinism, not mAP.*
 
 ---
 
-*Chart: `artifacts/silicon_yolo_asic_cost_comparison.png` · Generator: `tools/asic_cost_compare.py`*
+*Chart: [`showcase/silicon_yolo_asic_cost_comparison.png`](showcase/silicon_yolo_asic_cost_comparison.png) · Generator: `tools/asic_cost_compare.py`*
+
+---
+
+### 📂 Project materials
+[🔬 README](../README.md) · [📝 Devpost](DEVPOST_SUBMISSION.md) · [💸 Cost analysis](COST_COMPARISON.md) · [🧪 Sim showcase](../rtl_tb/SIM_SHOWCASE.md) · [🕯️ Prior attempt](PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_with_cost.mp4)

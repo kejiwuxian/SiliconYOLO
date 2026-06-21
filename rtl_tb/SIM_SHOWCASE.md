@@ -1,4 +1,4 @@
-# Silicon YOLO — Simulation Showcase
+# 🧪 Silicon YOLO — Simulation Showcase
 
 This directory contains the **self-checking testbenches** and the **graphical
 simulation showcase** for the Cognichip-generated YOLOv10n fixed-weight INT8
@@ -225,3 +225,8 @@ sim/
   run_fixedpoint_sim.py     INT8 detection demo (GIF + PNGs)
   run_layer_activations.py  feature-map montage
 ```
+
+---
+
+### 📂 Project materials
+[🔬 README](../README.md) · [📝 Devpost](../docs/DEVPOST_SUBMISSION.md) · [💸 Cost analysis](../docs/COST_COMPARISON.md) · [🧪 Sim showcase](SIM_SHOWCASE.md) · [🕯️ Prior attempt](../docs/PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_with_cost.mp4)
