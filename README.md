@@ -114,7 +114,7 @@ The whole project was **orchestrated by Simular Sai** (a computer-use agent) dri
 **two coding/EDA agents in parallel** in a single window:
 
 - **Track A — model & verification (Claude Code):** baseline → **INT8 PTQ** → **weight freeze** → hardware handoff (`hw_graph.json`, per-layer `.mem`/`.coe` ROMs, `quant_scales.json`) → golden vectors.
-- **Track B — chip design (Cognichip ACI):** spec capture → micro-architecture → PPA → **SystemVerilog RTL** (layer scheduler, requant unit, SiLU LUT, unified weight ROM, CSD MACs).
+- **Track B — chip design (Cognichip):** spec capture → micro-architecture → PPA → **SystemVerilog RTL** (layer scheduler, requant unit, SiLU LUT, unified weight ROM, CSD MACs).
 
 **The handoff contract:** Track B is *gated* — no RTL until Track A freezes the weights
 and ships the op-graph, quant scales, and golden vectors. Sai enforced that gate,
@@ -190,7 +190,7 @@ See `docs/IMPLEMENTATION_PLAN.md` for the single source of truth.
 
 ## 🧰 Built with
 
-`PyTorch` · `Ultralytics YOLOv10n` · INT8 PTQ · `SystemVerilog` · `Icarus Verilog` / OSS CAD Suite · `Vivado` (xsim) · CSD / constant-coefficient arithmetic · **Claude Code** · **Cognichip ACI** · **Simular Sai** · `matplotlib` · HyperFrames
+`PyTorch` · `Ultralytics YOLOv10n` · INT8 PTQ · `SystemVerilog` · `Icarus Verilog` / OSS CAD Suite · `Vivado` (xsim) · CSD / constant-coefficient arithmetic · **Claude Code** · **Cognichip** · **Simular Sai** · `matplotlib` · HyperFrames
 
 ## 📂 Project materials
 
@@ -207,4 +207,4 @@ See `docs/IMPLEMENTATION_PLAN.md` for the single source of truth.
 
 ---
 
-<sub>Silicon YOLO · UC Berkeley AI Hackathon 2026 (Cal Hacks) · co-designed by Claude Code + Cognichip ACI, orchestrated by Simular Sai.</sub>
+<sub>Silicon YOLO · UC Berkeley AI Hackathon 2026 (Cal Hacks) · co-designed by Claude Code + Cognichip, orchestrated by Simular Sai.</sub>

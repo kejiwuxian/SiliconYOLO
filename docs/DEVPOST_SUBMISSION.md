@@ -112,7 +112,7 @@ hardware block**. The winning flow is **pretrained → quantize → freeze** (no
 **The lesson:** for a *fixed-weight* chip, a stronger pretrained model you never
 touch beats a weaker one you spend a week pruning.
 
-**Track B — chip design (Cognichip ACI, hardware):**
+**Track B — chip design (Cognichip, hardware):**
 - Spec capture → micro-architecture → PPA estimation → RTL. A naive 16-PE design
   only reached **~2.8 FPS**, which drove the move to the **folded 1024-MAC CSD
   pipeline** above. *(Per sponsor guidelines we keep the EDA tool's internals
@@ -168,7 +168,7 @@ HyperFrames animation toolchain).
   smaller silicon. Long-term: an actual tiny tapeout.
 
 ## Built with
-`YOLOv10n` · `PyTorch (CUDA)` · `torch-pruning` · `Ultralytics` · `pycocotools` · `Simular Sai` · `SimuLang` · `Simular HyperFrames (demo video)` · `Claude Code (via TokenRouter)` · `Cognichip ACI` · `Verilog/RTL` · `Xilinx Vivado` · `Digilent Genesys 2 (Kintex-7 XC7K325T)` · `INT8 / CSD multiplier-less arithmetic`
+`YOLOv10n` · `PyTorch (CUDA)` · `torch-pruning` · `Ultralytics` · `pycocotools` · `Simular Sai` · `SimuLang` · `Simular HyperFrames (demo video)` · `Claude Code (via TokenRouter)` · `Cognichip` · `Verilog/RTL` · `Xilinx Vivado` · `Digilent Genesys 2 (Kintex-7 XC7K325T)` · `INT8 / CSD multiplier-less arithmetic`
 
 ## Sponsors & how we used them
 This build leaned on several CalHacks sponsors — each played a *real*, load-bearing role:
@@ -178,7 +178,7 @@ This build leaned on several CalHacks sponsors — each played a *real*, load-be
   contract, babysat the multi-hour GPU runs, and auto-recovered crashes. Sai also
   **generated this submission's entire demo video** via the **HyperFrames** animation
   toolchain — plus the README, thumbnails, and cost charts.
-- **Cognichip — ACI.** The AI EDA agent behind the **hardware track**: spec capture →
+- **Cognichip.** The AI EDA agent behind the **hardware track**: spec capture →
   micro-architecture → PPA → the SystemVerilog RTL for the fixed-weight accelerator.
   *(Per Cognichip's guidance we keep the tool's internals confidential and describe only
   our design problem and deliverables.)*
@@ -200,7 +200,7 @@ This build leaned on several CalHacks sponsors — each played a *real*, load-be
    multi-hour GPU runs, and auto-recovered crashes, **and generated
    the demo video itself** (HyperFrames). (Requirement: post on X / LinkedIn tagging
    the official accounts — draft below.)
-3. **Cognichip sponsor track:** we used Cognichip ACI to solve a *real* chip-design
+3. **Cognichip sponsor track:** we used Cognichip to solve a *real* chip-design
    problem (the YOLO accelerator), showing design methodology, a concrete
    deliverable, and how AI accelerated the HW design. (We respect the confidentiality
    guidance and don't disclose tool internals.)
@@ -232,7 +232,7 @@ This build leaned on several CalHacks sponsors — each played a *real*, load-be
    concept: weights frozen into multiplier-less logic.
 2. **00:25–01:10 The build, live:** screen of Sai orchestrating two agents in
    parallel — Claude Code quantizing the pretrained model on the left of the story, Cognichip
-   ACI doing the chip on the right — with the **handoff contract** called out.
+   doing the chip on the right — with the **handoff contract** called out.
 3. **01:10–02:00 Results:** the near-lossless INT8 numbers (37.94 → 37.62 mAP),
    then the HW PPA (1024 CSD MACs, 0 DSPs, ~38K LUTs / 11.7%, ~51 FPS, ~3.2 W on
    FPGA / ~0.2 W as a 28 nm ASIC), and the golden-vector verification flow.
