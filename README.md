@@ -83,8 +83,8 @@ That removes the DSP array, the weight memory traffic, and most of the power.
 | **Weights** | Frozen in on-chip ROM (`.mem`/`.coe`), baked as multiplier-less logic |
 | **LUTs** | ~38K (**11.7 %** of XC7K325T) |
 | **BRAM** | ~483 (**57.5 %**) |
-| **Throughput** | **~51 FPS** @ 200 MHz (FPGA) · **up to ~200 FPS** @ ~800 MHz (28 nm ASIC) |
-| **Power** | **~3.2 W** on FPGA · **~0.2 W** (200 MHz) – **~0.8 W** (800 MHz) as a 28 nm ASIC |
+| **Throughput** | **~51 FPS** @ 200 MHz (FPGA)<br>**up to ~200 FPS** @ ~800 MHz (28 nm ASIC) |
+| **Power** | **~3.2 W** on FPGA<br>**~0.2 W** (200 MHz) – **~0.8 W** (800 MHz) as a 28 nm ASIC |
 | **Accuracy** | FP32 **37.94** → INT8 PTQ **37.62** mAP50-95 (−0.32) |
 
 ## 📊 Results & verification
