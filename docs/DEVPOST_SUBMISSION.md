@@ -82,18 +82,33 @@ the build manager:
 
 **Track A — model & verification (Claude Code, software):**
 - A1 Repo scaffold (CUDA torch pinned for RTX 4060, golden/quant/hwgraph dirs, git).
-- A2 FP32 baseline: **mAP@0.5:0.95 = 37.37** (matches published YOLOv8-n); locked
-  accuracy floors at **≥35.37 / ≥50.57** (a −2.0 budget).
-- A3 **Structured channel pruning** (dependency-graph, torch-pruning) at L1 ratio
-  0.10 → real reduction **3.157M → 2.652M params (−16%)**, **8.80 → 7.53 GFLOPs
-  (−14.5%)**. A custom **PrunedDetectionTrainer** preserves the pruned channels
-  through fine-tuning. A 3-epoch proof recovered monotonically (8.88 → 18.9 →
-  26.0) to a formal **mAP50-95 = 26.55 / mAP50 = 39.76** (pycocotools, 5000 imgs);
-  a time-boxed production fine-tune followed.
-- A4 **INT8 post-training quantization** scaffold (per-channel weight scales +
-  per-tensor activation calibration via forward hooks → hwconst/quant_scales.json).
+
+*First attempt — and the pivot.* We started by **compressing YOLOv8-n the hard
+way**: structured dependency-graph channel pruning (torch-pruning, L1 ratio 0.10 →
+a real **3.157M → 2.652M params / 8.80 → 7.53 GFLOPs**) with a custom
+**PrunedDetectionTrainer** to retrain the pruned network. It *worked*, but accuracy
+recovery was painfully slow — a 3-epoch proof climbed monotonically to
+**mAP50-95 ≈ 26.5**, and a time-boxed production fine-tune only reached **~32**
+after 8 epochs (≈50 epochs of GPU time would have been needed to claw back the
+accuracy floor). The detour also cost us days of WinError-1455 pagefile crashes and
+zombie dataloaders. *(Full prune-and-retrain log: `docs/PRIOR_ATTEMPT_YOLOV8N.md`.)*
+
+So we **pivoted.** We dropped pruning entirely and switched the base model to
+**YOLOv10n (NMS-free)** — already **smaller (2.3M params)** and **more accurate
+(~38.5 mAP)** than the pruned YOLOv8-n, and its NMS-free head **deletes an entire
+hardware block**. The winning flow is **pretrained → quantize → freeze** (no training):
+- A2 **FP32 baseline (YOLOv10n): mAP50-95 = 37.94** — above our original target,
+  with zero retraining.
+- A3 **INT8 post-training quantization** (per-channel weight scales + per-tensor
+  activation calibration via forward hooks): **mAP50-95 = 37.62**, a **−0.32 pt**
+  drop — essentially lossless, and *higher* than the YOLOv8-n baseline we began with.
+- A4 **Weight freeze + hardware handoff:** `hw_graph.json` (83 Conv2D layers),
+  per-layer `.mem`/`.coe` weight ROMs, and `quant_scales.json`.
 - A6 **Golden-vector generator** (per-layer intermediates + final outputs + a
   manifest contract) for bit-accurate RTL verification.
+
+**The lesson:** for a *fixed-weight* chip, a stronger pretrained model you never
+touch beats a weaker one you spend a week pruning.
 
 **Track B — chip design (Cognichip ACI, hardware):**
 - Spec capture → micro-architecture → PPA estimation → RTL. A naive 16-PE design
