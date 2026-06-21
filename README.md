@@ -36,15 +36,22 @@ INT8 stem feature maps (activation snapshot):
 
 ## 🎬 Demo video
 
-[![▶ Watch the Silicon YOLO demo](docs/showcase/video_poster.png)](video/renders/silicon_yolo_v10n_demo_with_cost.mp4)
+[![▶ Watch the Silicon YOLO demo](docs/showcase/video_poster.png)](video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4)
 
-**[▶ Watch the 98-second demo (1080p)](video/renders/silicon_yolo_v10n_demo_with_cost.mp4)** — the full story:
+**[▶ Watch the 3-minute narrated demo (1080p)](video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4)** — fully voiced (ElevenLabs *Brian*), exactly **180 s**. Full narration: [`video/VIDEO_SCRIPT.md`](video/VIDEO_SCRIPT.md).
 
+**Part 1 — the chip (0–98 s)**
 1. **Title** — freezing a neural net into silicon.
-2. **Pipeline** — YOLOv10n → INT8 PTQ → frozen weights → CSD RTL → Kintex-7.
-3. **Results** — 51 FPS, 0 DSP, ~38K LUTs, 3.2 W, bit-exact INT8 detections.
-4. **Cost & efficiency** — ~$2/chip, 26× better energy/frame than edge GPUs.
-5. **Close** — *"Two AI agents designed AI silicon — and we kept them honest."*
+2. **NMS-free** — YOLOv10n drops the non-maximum-suppression hardware block.
+3. **Pipeline** — pretrained → INT8 PTQ → frozen weights → CSD RTL → Kintex-7.
+4. **Results** — 51 FPS, 0 DSP, ~38K LUTs, 3.2 W, bit-exact INT8 detections.
+5. **Cost & efficiency** — ~$2/chip, ~26× better energy/frame than edge GPUs.
+
+**Part 2 — the bet (98–180 s)**
+6. **The contrarian bet** — Taalas raised \$219M hard-coding *LLMs*; we bet on the opposite layer: edge **perception**.
+7. **Market** — non-LLM edge AI ~\$20B (2024) → \$100B+ by 2030 (~28% CAGR) — a larger, faster-growing TAM than on-device LLMs.
+8. **Modular by design** — drops into any SoC over **AXI4-Lite** (control) + **AXI4-Stream** (pixels / detections).
+9. **Close** — *"The model itself, etched in silicon — a drop-in vision brain for the next billion devices."*
 
 ## 💡 Inspiration
 
@@ -197,7 +204,8 @@ See `docs/IMPLEMENTATION_PLAN.md` for the single source of truth.
 | Material | Where |
 |---|---|
 | 📸 Graphic demo (GIF + waveforms) | [`docs/showcase/`](docs/showcase) |
-| 🎬 Demo video | [`video/renders/silicon_yolo_v10n_demo_with_cost.mp4`](video/renders/silicon_yolo_v10n_demo_with_cost.mp4) |
+| 🎬 Demo video (narrated, 180 s) | [`video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4`](video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4) |
+| 🎙️ Narration script | [`video/VIDEO_SCRIPT.md`](video/VIDEO_SCRIPT.md) |
 | 📝 Devpost write-up | [`docs/DEVPOST_SUBMISSION.md`](docs/DEVPOST_SUBMISSION.md) |
 | 💸 Cost & efficiency analysis | [`docs/COST_COMPARISON.md`](docs/COST_COMPARISON.md) |
 | 🧪 Simulation showcase | [`rtl_tb/SIM_SHOWCASE.md`](rtl_tb/SIM_SHOWCASE.md) |

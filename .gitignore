@@ -83,3 +83,13 @@ rtl_tb/sim_out/yolov10n_accel.vcd
 
 # --- Claude Code local state (skills, locks, settings) ---
 .claude/
+
+
+# ElevenLabs key (never commit) + TTS scratch
+.eleven_key
+video/.eleven_key
+video/voiceover_clips/
+
+# Scratch/intermediate render masters
+video/renders/_*.mp4
+video/renders/silicon_yolo_v10n_demo_voiceover.mp4

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "s1",
+    "start": 0.6,
+    "text": "What if an entire object detector lived inside one chip — no GPU, no cloud? This is Silicon YOLO: a pretrained neural network, frozen into silicon."
+  },
+  {
+    "id": "s2",
+    "start": 12.6,
+    "text": "We start from YOLOv10n. Unlike older detectors, it's NMS-free — it needs no non-maximum-suppression step. So an entire, awkward hardware block simply disappears, leaving a clean feed-forward pipeline that maps beautifully onto an FPGA fabric."
+  },
+  {
+    "id": "s3",
+    "start": 32.6,
+    "text": "The flow is simple. Take the pretrained weights, quantize them to eight-bit integers, then freeze them into a fixed contract — and hand that contract to hardware. No retraining, no fine-tuning loops. Just a deterministic path from model to metal."
+  },
+  {
+    "id": "s4",
+    "start": 48.6,
+    "text": "And the results speak for themselves. INT8 quantization is near-lossless — accuracy barely moves from the floating-point baseline. The design runs at fifty-one frames per second on a Kintex-7, using thirty-eight thousand LUTs, just three-point-two watts, and zero DSP blocks — every multiply built from constant-coefficient logic. And every datapath is verified bit-exact against the software golden vectors."
+  },
+  {
+    "id": "s5",
+    "start": 74.6,
+    "text": "Why does this matter? It unlocks private, milliwatt-class AI at the edge — vision that runs on a battery, with nothing ever leaving the device."
+  },
+  {
+    "id": "s6",
+    "start": 84.5,
+    "text": "Silicon YOLO. We froze a neural network into silicon."
+  },
+  {
+    "id": "cost",
+    "start": 90.6,
+    "text": "And it's economical, too — about twenty-six times better energy per frame, and roughly two dollars per chip at volume."
+  }
+]

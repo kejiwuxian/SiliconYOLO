@@ -160,8 +160,15 @@ HyperFrames animation toolchain).
 - Time-box first: a 2-hour proof run de-risks the decision to commit to a 15-hour
   production run.
 
+## The bet — why fixed-weight vision, why now
+Hard-coding a model into silicon is a proven idea — **Taalas** just raised **$219M** doing it for *small language models*. We're betting on the **opposite layer**: the biggest edge opportunity isn't language, it's **perception**.
+
+- **Market.** Non-LLM edge AI (vision/perception) is ~**$20B in 2024**, projected **$100B+ by 2030** (~28% CAGR) — a larger, faster-growing TAM than on-device LLMs (~$8B → ~$20B, ~15–18% CAGR).
+- **Modular by design.** Silicon YOLO is a self-contained accelerator block: **AXI4-Lite** for control, **AXI4-Stream** for pixels and detections. It drops straight into any SoC — next to a CPU, an ISP, or a RISC-V core — with no glue logic.
+- **Thesis.** The next wave of edge AI won't run on smaller *software*; it will be the **model itself, etched in silicon** — a drop-in vision brain for the next billion devices.
+
 ## What's next
-- Finish the production fine-tune, **freeze the weights**, and trigger RTL.
+- **Weights are already frozen** (INT8 PTQ, near-lossless) and RTL is generated; next is closing the top-level verification loop over the stubbed decoder.
 - Run full INT8 calibration + bit-accurate golden vectors; verify RTL against them.
 - Vivado synth → P&R → **bitstream → on-board Genesys 2 bring-up** with live camera.
 - Explore INT4 for tolerant layers and a task-specific class subset for even
@@ -228,18 +235,20 @@ This build leaned on several CalHacks sponsors — each played a *real*, load-be
 ---
 
 ## 3-minute demo video — script outline
-1. **00:00–00:25 Hook:** "What if a neural network *was* the chip?" Show the
-   concept: weights frozen into multiplier-less logic.
-2. **00:25–01:10 The build, live:** screen of Sai orchestrating two agents in
-   parallel — Claude Code quantizing the pretrained model on the left of the story, Cognichip
-   doing the chip on the right — with the **handoff contract** called out.
-3. **01:10–02:00 Results:** the near-lossless INT8 numbers (37.94 → 37.62 mAP),
-   then the HW PPA (1024 CSD MACs, 0 DSPs, ~38K LUTs / 11.7%, ~51 FPS, ~3.2 W on
-   FPGA / ~0.2 W as a 28 nm ASIC), and the golden-vector verification flow.
-4. **02:00–02:40 Why it matters:** edge AI energy + privacy; path from FPGA to
-   tapeout.
-5. **02:40–03:00 Close:** "Two AI agents designed AI silicon — and we kept them
-   honest." Tracks + thanks.
+Fully narrated (ElevenLabs *Brian*, Multilingual v2), **exactly 180 s**. Full text: [`video/VIDEO_SCRIPT.md`](../video/VIDEO_SCRIPT.md).
+
+**Part 1 — the chip (0:00–1:38)**
+1. **Hook:** "What if an entire object detector lived inside one chip — no GPU, no cloud?" Weights frozen into multiplier-less logic.
+2. **NMS-free:** YOLOv10n needs no non-max-suppression — an entire hardware block disappears, leaving a clean feed-forward pipeline that maps onto FPGA fabric.
+3. **Flow:** pretrained → INT8 quantize → freeze into a fixed contract → hand to hardware. No retraining loops.
+4. **Results:** near-lossless INT8 (37.94 → 37.62 mAP), ~51 FPS on Kintex-7, ~38K LUTs, ~3.2 W, **0 DSPs** (every multiply is constant-coefficient logic), bit-exact vs software golden vectors.
+5. **Why + cost:** private, milliwatt-class edge AI; ~26× better energy/frame, ~$2/chip at volume.
+
+**Part 2 — the bet (1:38–3:00)**
+6. **The contrarian bet:** Taalas raised $219M hard-coding *LLMs* into silicon; we bet on the opposite layer — edge **perception**.
+7. **Market:** non-LLM edge AI ~$20B (2024) → $100B+ by 2030 (~28% CAGR) — a larger, faster-growing TAM than on-device LLMs (~$8B → ~$20B).
+8. **Modular by design:** drops into any SoC over **AXI4-Lite** (control) + **AXI4-Stream** (pixels/detections) — right next to a CPU, an ISP, or a RISC-V core.
+9. **Close:** "The model itself, etched in silicon — a drop-in vision brain for the next billion devices."
 
 ## Draft social post (required for the Simular track)
 > We built **Silicon YOLO** at @CalHacks AI Hackathon 2026 🧠⚡
@@ -271,4 +280,4 @@ This build leaned on several CalHacks sponsors — each played a *real*, load-be
 ---
 
 ### 📂 Project materials
-[🔬 README](../README.md) · [📝 Devpost](DEVPOST_SUBMISSION.md) · [💸 Cost analysis](COST_COMPARISON.md) · [🧪 Sim showcase](../rtl_tb/SIM_SHOWCASE.md) · [🕯️ Prior attempt](PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_with_cost.mp4)
+[🔬 README](../README.md) · [📝 Devpost](DEVPOST_SUBMISSION.md) · [💸 Cost analysis](COST_COMPARISON.md) · [🧪 Sim showcase](../rtl_tb/SIM_SHOWCASE.md) · [🕯️ Prior attempt](PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4)

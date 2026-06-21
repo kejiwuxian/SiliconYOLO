@@ -229,4 +229,4 @@ sim/
 ---
 
 ### 📂 Project materials
-[🔬 README](../README.md) · [📝 Devpost](../docs/DEVPOST_SUBMISSION.md) · [💸 Cost analysis](../docs/COST_COMPARISON.md) · [🧪 Sim showcase](SIM_SHOWCASE.md) · [🕯️ Prior attempt](../docs/PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_with_cost.mp4)
+[🔬 README](../README.md) · [📝 Devpost](../docs/DEVPOST_SUBMISSION.md) · [💸 Cost analysis](../docs/COST_COMPARISON.md) · [🧪 Sim showcase](SIM_SHOWCASE.md) · [🕯️ Prior attempt](../docs/PRIOR_ATTEMPT_YOLOV8N.md) · [🎬 Demo video](../video/renders/silicon_yolo_v10n_demo_voiceover_taalas.mp4)
