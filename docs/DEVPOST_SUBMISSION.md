@@ -121,7 +121,9 @@ touch beats a weaker one you spend a week pruning.
 **The contract between them:** Track B is **gated** — it cannot emit
 weight-dependent RTL until Track A **freezes** the weights and ships the op-graph,
 quant scales, and golden vectors. Sai enforced that handoff, babysat the
-multi-hour GPU runs, and recovered the build whenever it broke.
+multi-hour GPU runs, recovered the build whenever it broke — and **generated this
+submission's demo video, README, thumbnails, and cost charts itself** (driving the
+HyperFrames animation toolchain).
 
 ## Challenges we ran into
 - **An importance metric that silently destroyed accuracy.** BN-γ (Network-
@@ -166,12 +168,28 @@ multi-hour GPU runs, and recovered the build whenever it broke.
   smaller silicon. Long-term: an actual tiny tapeout.
 
 ## Built with
-\`YOLOv10n\` · \`PyTorch (CUDA)\` · \`torch-pruning\` · \`Ultralytics\` ·
-\`pycocotools\` · \`Simular Sai\` · \`SimuLang\` · \`Claude Code\` · \`Cognichip ACI\` ·
-\`Verilog/RTL\` · \`Xilinx Vivado\` · \`Digilent Genesys 2 (Kintex-7 XC7K325T)\` ·
-\`INT8 / CSD multiplier-less arithmetic\`
+`YOLOv10n` · `PyTorch (CUDA)` · `torch-pruning` · `Ultralytics` · `pycocotools` · `Simular Sai` · `SimuLang` · `Simular HyperFrames (demo video)` · `Claude Code (via TokenRouter)` · `Cognichip ACI` · `Verilog/RTL` · `Xilinx Vivado` · `Digilent Genesys 2 (Kintex-7 XC7K325T)` · `INT8 / CSD multiplier-less arithmetic`
 
----
+## Sponsors & how we used them
+This build leaned on several CalHacks sponsors — each played a *real*, load-bearing role:
+
+- **Simular — Sai · SimuLang · HyperFrames.** Sai (a computer-use agent) was the **build
+  manager**: it drove two AI agents in parallel, enforced the software↔hardware handoff
+  contract, babysat the multi-hour GPU runs, and auto-recovered crashes. Sai also
+  **generated this submission's entire demo video** via the **HyperFrames** animation
+  toolchain — plus the README, thumbnails, and cost charts.
+- **Cognichip — ACI.** The AI EDA agent behind the **hardware track**: spec capture →
+  micro-architecture → PPA → the SystemVerilog RTL for the fixed-weight accelerator.
+  *(Per Cognichip's guidance we keep the tool's internals confidential and describe only
+  our design problem and deliverables.)*
+- **Token Company — TokenRouter.** Unified LLM API routing that **powered both coding
+  agents** through the long autonomous runs — one endpoint/credential driving the entire
+  multi-hour, multi-session build.
+- **Anthropic — Claude (Claude Code).** The model/agent behind the **software track**
+  (baseline → INT8 PTQ → weight freeze → golden vectors) and the RTL **simulation
+  showcase** (bit-exact unit testbenches under Icarus Verilog).
+- **Platform (not a sponsor, for completeness):** AMD–Xilinx **Kintex-7 XC7K325T** on a
+  **Digilent Genesys 2** board, **Vivado** toolflow.
 
 ## Tracks we're submitting to (and why)
 1. **Ddoski's Lab (grand-prize track — science/engineering/hardware/embedded):**
@@ -179,12 +197,16 @@ multi-hour GPU runs, and recovered the build whenever it broke.
    hardware/embedded engineering project.
 2. **Simular sponsor track:** Sai + SimuLang were used *meaningfully* — Sai
    orchestrated two AI agents in parallel, enforced the SW↔HW handoff, babysat
-   multi-hour GPU runs, and auto-recovered crashes. (Requirement: post on X /
-   LinkedIn tagging the official accounts — draft below.)
+   multi-hour GPU runs, and auto-recovered crashes, **and generated
+   the demo video itself** (HyperFrames). (Requirement: post on X / LinkedIn tagging
+   the official accounts — draft below.)
 3. **Cognichip sponsor track:** we used Cognichip ACI to solve a *real* chip-design
    problem (the YOLO accelerator), showing design methodology, a concrete
    deliverable, and how AI accelerated the HW design. (We respect the confidentiality
    guidance and don't disclose tool internals.)
+4. **Token Company / TokenRouter sponsor track:** TokenRouter provided the unified
+   API routing that powered both AI coding agents across the entire multi-hour,
+   multi-session autonomous build.
 
 ## How we map to the judging criteria
 - **Application / feasibility:** milliwatt-class, private, on-device detection for
@@ -236,7 +258,7 @@ multi-hour GPU runs, and recovered the build whenever it broke.
 - [ ] Add cover image / thumbnail + 3–5 screenshots (Sai dual-agent view, the
       numbers, the architecture diagram)
 - [ ] Fill all Devpost long-text fields from the sections above
-- [ ] Select tracks: Ddoski's Lab + Simular + Cognichip
+- [ ] Select tracks: Ddoski's Lab + Simular + Cognichip + Token Company (TokenRouter)
 - [ ] Post the social update tagging Simular's official accounts (Simular track req)
 - [ ] Confirm Cognichip-track deliverable expectations & keep tool internals private
 - [ ] Team members added on Devpost
